@@ -6,15 +6,17 @@ import { heroPhoto } from "../../data/coverage";
 export function HomeHero() {
   return (
     <section className="home-hero" aria-labelledby="home-title">
-      <Image
-        src={heroPhoto.src}
-        alt={heroPhoto.alt}
-        fill
-        priority
-        fetchPriority="high"
-        sizes="100vw"
-        className="home-hero__image"
-      />
+      <div className="home-hero__visual">
+        <Image
+          src="/images/motocross-hero-original.jpg"
+          alt={heroPhoto.alt}
+          fill
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 832px) 100vw, 62vw"
+          className="home-hero__image"
+        />
+      </div>
       <div className="home-hero__scrim" aria-hidden="true" />
       <Container className="home-hero__content">
         <Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow>

@@ -1,19 +1,17 @@
-/* PR-008 — lente 3D e transição de scroll. */
+/* Studio camera. The poster is a still of the same three-dimensional scene. */
 .lens-transition {
   position: relative;
   min-height: 100svh;
   overflow: clip;
   isolation: isolate;
-  background: #11120f;
+  background: #0c0d0e;
   color: #fff;
 }
 .lens-transition__pin {
   position: relative;
-  display: grid;
   min-height: 100svh;
-  place-items: center;
   overflow: hidden;
-  background: #11120f;
+  background: radial-gradient(ellipse at 65% 40%, #24282a 0, #121416 42%, #0c0d0e 74%);
 }
 .lens-transition__canvas {
   position: absolute;
@@ -28,38 +26,17 @@
 .lens-transition[data-mode="webgl"] .lens-transition__canvas { opacity: 1; }
 .lens-transition__fallback {
   position: absolute;
+  inset: 0;
   z-index: 1;
-  width: min(66vw, 31rem);
-  aspect-ratio: 1;
-  border: 1px solid rgb(255 255 255 / .24);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 42% 35%, rgb(174 201 213 / .3), transparent 26%),
-    radial-gradient(circle, #08090b 0 24%, #30363a 25% 27%, #0b0d0f 28% 46%, #5d6262 47% 49%, #17191b 50% 70%, #777 71% 73%, #17191b 74%);
-  box-shadow: 0 0 0 1.2rem rgb(255 255 255 / .035), 0 0 6rem rgb(143 183 202 / .12), inset 0 0 2.5rem #000;
-  transition: opacity .45s ease;
 }
-.lens-transition__fallback-ring {
-  position: absolute;
-  inset: 8%;
-  border: 1px solid rgb(255 255 255 / .35);
-  border-radius: 50%;
-}
-.lens-transition__fallback-ring--inner { inset: 27%; border-width: 2px; }
-.lens-transition__fallback-iris {
-  position: absolute;
-  inset: 39%;
-  border: .5rem solid #090a0c;
-  border-radius: 50%;
-  background: radial-gradient(circle, #08090b 0 38%, #8caab7 40% 44%, #15191c 46%);
-  box-shadow: 0 0 1rem #8caab744;
-}
-.lens-transition[data-mode="webgl"] .lens-transition__fallback { opacity: 0; }
+.lens-transition__fallback img { object-fit: contain; }
+.lens-transition[data-mode="webgl"] .lens-transition__fallback { visibility: hidden; }
 .lens-transition__caption {
-  position: relative;
+  position: absolute;
+  bottom: clamp(3rem, 9vh, 7rem);
+  left: max(var(--layout-gutter), calc((100vw - 80rem) / 2));
   z-index: 2;
-  width: min(100% - 2rem, 80rem);
-  padding-top: clamp(24rem, 56vh, 34rem);
+  max-width: 42%;
   pointer-events: none;
 }
 .lens-transition__eyebrow {
@@ -72,32 +49,33 @@
 }
 .lens-transition__caption h2 {
   margin: 0;
-  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
   font-weight: 900;
   font-style: italic;
   letter-spacing: -.07em;
-  line-height: .88;
+  line-height: .9;
   text-transform: uppercase;
 }
 .lens-transition__caption h2 span { color: #bfc1b2; }
 .lens-transition__hint {
   margin: 1.5rem 0 0;
+  max-width: 23rem;
   color: rgb(255 255 255 / .72);
-  font-size: .75rem;
+  font-size: .7rem;
+  line-height: 1.5;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.lens-transition[data-mode="fallback"] .lens-transition__pin { min-height: min(76svh, 44rem); }
-.lens-transition[data-mode="fallback"] .lens-transition__caption { padding-top: clamp(18rem, 45vh, 26rem); }
+.lens-transition[data-mode="fallback"] { min-height: auto; }
+.lens-transition[data-mode="fallback"] .lens-transition__pin { min-height: min(90svh, 48rem); }
 @media (max-width: 47.99rem) {
-  .lens-transition { min-height: auto; }
-  .lens-transition__pin { min-height: 31rem; }
-  .lens-transition__fallback { width: min(72vw, 18rem); }
-  .lens-transition__caption { padding-top: 15rem; padding-bottom: 2.5rem; }
+  .lens-transition__pin,
+  .lens-transition[data-mode="fallback"] .lens-transition__pin { min-height: 36rem; }
+  .lens-transition__fallback { inset: -2rem -4.5rem 9rem; }
+  .lens-transition__caption { max-width: calc(100% - 2 * var(--layout-gutter)); bottom: 2.5rem; }
   .lens-transition__caption h2 { font-size: clamp(2.5rem, 12vw, 4rem); }
-  .lens-transition__hint { max-width: 15rem; line-height: 1.5; }
+  .lens-transition__hint { max-width: 16rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lens-transition__fallback { transition: none; }
   .lens-transition__canvas { display: none; }
 }

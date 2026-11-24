@@ -64,7 +64,8 @@ button, a { color: inherit; }
 
 /* PR 04 — home editorial hero. */
 .home-hero { position: relative; isolation: isolate; min-height: min(820px, calc(100svh - 5.25rem)); display: flex; align-items: center; overflow: hidden; background: #171717; color: #fff; }
-.home-hero__image { z-index: -3; object-fit: cover; object-position: center 42%; }
+.home-hero__visual { position: absolute; z-index: -3; inset: 0 0 0 auto; width: 62%; }
+.home-hero__image { object-fit: cover; object-position: center 42%; }
 .home-hero__scrim { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.62) 38%, rgba(0,0,0,.08) 78%), linear-gradient(0deg, rgba(0,0,0,.42), transparent 35%); }
 .home-hero__content { position: relative; z-index: 1; padding-block: clamp(4rem, 9vw, 8rem); }
 .home-hero__title { max-width: 11ch; margin: 1.6rem 0 0; font-size: clamp(3.25rem, 8.2vw, 8rem); font-weight: 900; line-height: .88; letter-spacing: -.075em; text-wrap: balance; }
@@ -91,6 +92,7 @@ button, a { color: inherit; }
 .home-about p { max-width: 40rem; font-size: 1.05rem; }
 .home-about__link { display: inline-flex; gap: .75rem; margin-top: 1.25rem; padding-bottom: .35rem; border-bottom: 2px solid currentColor; font-weight: 800; text-decoration: none; }
 @media (max-width: 52rem) {
+  .home-hero__visual { width: 100%; }
   .home-hero { min-height: min(760px, calc(100svh - 4.5rem)); align-items: flex-end; }
   .home-hero__image { object-position: 58% center; }
   .home-hero__scrim { background: linear-gradient(0deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.68) 45%, rgba(0,0,0,.08) 100%); }
