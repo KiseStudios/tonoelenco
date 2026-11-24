@@ -25,6 +25,8 @@ A faixa Modalidade, Olhar e Registro foi removida. A transição começa onde te
 
 [Início da câmera](evidence/hero-refinement/camera-start-1440.jpg) · [Aproximação](evidence/hero-refinement/camera-progress-1440.jpg) · [Galeria](evidence/hero-refinement/gallery-1440.jpg) · [Fallback mobile](evidence/hero-refinement/camera-fallback-390.jpg)
 
+O botão “Descubra o ELENCO” leva diretamente à seção institucional. Esse salto evita que a inicialização do ScrollTrigger interrompa a navegação ao carregar a cena durante a rolagem.
+
 ## Testes
 
 | Comando | Resultado |
