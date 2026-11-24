@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ContactClosing } from "../components/contact/contact-closing";
 import { CoverageSection } from "../components/coverage/coverage-section";
 import { HomeHero } from "../components/home/home-hero";
 import { Container, Eyebrow } from "../components/brand";
@@ -34,9 +36,10 @@ export default function Home() {
             O ELENCO registra a energia de cada prova e aproxima atletas,
             equipes e pessoas das imagens que contam suas histórias.
           </p>
-          <a className="home-about__link" href="/galeria">Encontre suas fotos <span aria-hidden="true">↗</span></a>
+          <Link className="home-about__link" href="/sobre">Conheça o ELENCO</Link>
         </Container>
       </section>
+      <ContactClosing />
     </main>
   );
 }
