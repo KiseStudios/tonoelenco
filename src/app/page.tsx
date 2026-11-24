@@ -1,21 +1,40 @@
-import { BrandLogo, Container, Eyebrow } from "../components/brand";
-const spacingTokens = [["space-1","4px"],["space-2","8px"],["space-3","12px"],["space-4","16px"],["space-6","24px"],["space-8","32px"],["space-12","48px"],["space-16","64px"],["space-24","96px"]];
-const typeTokens = [["xs","12px"],["sm","14px"],["base","16px"],["lg","20px"],["xl","24px"],["2xl","clamp(28px, 3vw, 40px)"],["display","clamp(40px, 7vw, 88px)"]];
+import { HomeHero } from "../components/home/home-hero";
+import { Container, Eyebrow } from "../components/brand";
+
+const editorialItems = [
+  { label: "MODALIDADE", value: "Motocross" },
+  { label: "OLHAR", value: "Fotografia esportiva" },
+  { label: "REGISTRO", value: "Cada momento importa" },
+];
+
 export default function Home() {
-  return <main>
-    <header className="bg-black py-16 text-white md:py-24"><Container><Eyebrow>ELENCO · Design foundation · PR 02</Eyebrow><h1 className="brand-display mt-6 max-w-5xl">Identidade em sistema.</h1><p className="mt-6 max-w-2xl text-base md:text-lg">Base visual reutilizável para as próximas interfaces da ELENCO Fotografia Esportiva.</p></Container></header>
-    <section className="py-16 md:py-24"><Container><Eyebrow>01 · Assinaturas oficiais</Eyebrow><h2 className="brand-heading mt-4">Ativos da marca</h2><p className="mt-3 max-w-2xl">Os componentes estão preparados para receber os arquivos vetoriais oficiais. Os arquivos-fonte ainda precisam ser entregues; nenhum logotipo foi redesenhado a partir dos mockups.</p>
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <div className="border border-black p-6"><Eyebrow>Logo principal · fundo claro</Eyebrow><div className="mt-6"><BrandLogo variant="primary" tone="on-light" /></div></div>
-        <div className="border border-black bg-black p-6 text-white"><Eyebrow>Logo horizontal · fundo escuro</Eyebrow><div className="mt-6"><BrandLogo variant="horizontal" tone="on-dark" /></div></div>
-        <div className="border border-black bg-black p-6 text-white"><Eyebrow>Símbolo E · fundo escuro</Eyebrow><div className="mt-6"><BrandLogo variant="symbol" tone="on-dark" /></div></div>
-        <div className="border border-black p-6"><Eyebrow>Logo empilhado · fundo claro</Eyebrow><div className="mt-6"><BrandLogo variant="primary" tone="on-light" /></div></div>
-      </div><p className="mt-4 text-sm">Status dos SVGs oficiais: pendentes de recebimento. Consulte public/brand/README.md.</p>
-    </Container></section>
-    <section className="bg-black py-16 text-white md:py-24"><Container><Eyebrow>02 · Fundamentos</Eyebrow><h2 className="brand-heading mt-4">Tokens de cor</h2><div className="mt-8 grid gap-4 sm:grid-cols-2"><div className="border border-white p-5"><div className="h-24 bg-white" /><p className="mt-4 font-bold">Brand white</p><code>#FFFFFF</code></div><div className="border border-white p-5"><div className="h-24 bg-black ring-1 ring-white" /><p className="mt-4 font-bold">Brand black</p><code>#000000</code></div></div></Container></section>
-    <section className="py-16 md:py-24"><Container><Eyebrow>03 · Escalas</Eyebrow><h2 className="brand-heading mt-4">Espaçamento</h2><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{spacingTokens.map(([name,size])=><div key={name} className="border border-black p-4"><div className="brand-cut h-3 bg-black" style={{width:size}} aria-hidden="true" /><p className="mt-3 font-bold">{name}</p><code>{size}</code></div>)}</div><h2 className="brand-heading mt-16">Escala tipográfica</h2><div className="mt-8 space-y-5">{typeTokens.map(([name,size])=><div key={name} className="flex flex-col gap-2 border-b border-black pb-4 sm:flex-row sm:items-baseline sm:justify-between"><span className="font-bold">{name}</span><span className="text-sm">{size}</span></div>)}</div></Container></section>
-    <section className="bg-black py-16 text-white md:py-24"><Container><Eyebrow>04 · Linguagem gráfica</Eyebrow><h2 className="brand-heading mt-4">Movimento e velocidade</h2><p className="mt-4 max-w-2xl">Cortes inclinados e formas angulares são recursos editoriais de apoio. Devem aparecer em blocos, molduras e transições — nunca como alteração na geometria dos arquivos oficiais.</p><div className="mt-10 grid gap-4 sm:grid-cols-3"><div className="brand-cut h-24 bg-white" /><div className="brand-cut h-24 border border-white" /><div className="brand-cut h-24 bg-white" /></div><p className="mt-6 text-sm">Tipografia sans-serif robusta provisória. A família oficial deverá substituir o fallback quando o arquivo/nome for confirmado.</p></Container></section>
-    <section className="py-16 md:py-24"><Container><Eyebrow>05 · Aplicações de referência</Eyebrow><h2 className="brand-heading mt-4">Home, Galeria e Mobile</h2><div className="mt-8 grid gap-4 md:grid-cols-3">{[{title:"Home",description:"Assinatura de marca com hierarquia editorial forte e cortes de apoio."},{title:"Galeria",description:"Container e grid responsivo para organizar conteúdo visual sem competir com as imagens."},{title:"Mobile",description:"Versões compactas, margens consistentes e leitura preservada em telas estreitas."}].map(item=><article key={item.title} className="border border-black p-6"><Eyebrow>Referência · preview</Eyebrow><h3 className="mt-4 text-xl font-extrabold">{item.title}</h3><p className="mt-3">{item.description}</p></article>)}</div><p className="mt-8 text-sm">Conferir esta base em 390 px, 820 px e 1440 px. Os previews correspondentes não estavam presentes no repositório consultado.</p></Container></section>
-    <footer className="border-t border-black py-8"><Container><Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow><p className="mt-3 text-sm">Design foundation · revisão pendente</p></Container></footer>
-  </main>;
+  return (
+    <main>
+      <HomeHero />
+      <section className="home-editorial-strip" aria-label="Informações editoriais">
+        <Container className="home-editorial-strip__inner">
+          {editorialItems.map((item, index) => (
+            <div className="home-editorial-item" key={item.label}>
+              <span className="home-editorial-item__index">0{index + 1}</span>
+              <div>
+                <p>{item.label}</p>
+                <strong>{item.value}</strong>
+              </div>
+            </div>
+          ))}
+        </Container>
+      </section>
+      <section id="sobre-elenco" className="home-about">
+        <Container className="home-about__inner">
+          <Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow>
+          <h2>O esporte acontece em um instante. A fotografia faz ele ficar.</h2>
+          <p>
+            O ELENCO registra a energia de cada prova e aproxima atletas,
+            equipes e pessoas das imagens que contam suas histórias.
+          </p>
+          <a className="home-about__link" href="/galeria">Encontre suas fotos <span aria-hidden="true">↗</span></a>
+        </Container>
+      </section>
+    </main>
+  );
 }

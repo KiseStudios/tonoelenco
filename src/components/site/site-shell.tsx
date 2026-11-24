@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -20,7 +21,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <header className="site-header">
         <div className="site-header__inner">
           <Link className="site-wordmark" href="/" aria-label="ELENCO — página inicial" onClick={() => setMenuOpen(false)}>
-            ELENCO<span>FOTOGRAFIA ESPORTIVA</span>
+            <Image src="/brand/logo-horizontal.png" alt="ELENCO Fotografia Esportiva" width={220} height={62} priority className="site-wordmark__image" />
           </Link>
 
           <button
@@ -62,7 +63,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
       <footer className="site-footer">
         <div className="site-footer__inner">
-          <p className="site-footer__brand">ELENCO</p>
+          <Image src="/brand/logo-horizontal.png" alt="ELENCO Fotografia Esportiva" width={180} height={51} className="site-footer__logo" />
           <p>Fotografia Esportiva</p>
         </div>
       </footer>
