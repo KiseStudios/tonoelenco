@@ -3,7 +3,7 @@
 .site-navigation__archive:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .about-page { background: #f1f0e9; color: #111; }
 .about-opening { padding-block: clamp(3rem, 7vw, 7rem) 2.5rem; }
-.about-opening h1 { max-width: 14ch; margin: 3rem 0; font-size: clamp(3.1rem, 8.8vw, 8.5rem); font-style: italic; font-weight: 900; line-height: .94; letter-spacing: -.065em; }
+.about-opening h1 { max-width: 14ch; margin: 3rem 0; font-size: clamp(3.1rem, 8.8vw, 8.5rem); font-style: italic; font-weight: 900; line-height: .94; letter-spacing: -.065em; overflow-wrap: anywhere; }
 .about-opening h1 span { color: #64665d; }
 .about-opening__statement { display: flex; justify-content: space-between; align-items: baseline; gap: 2rem; border-top: 1px solid #b8b9af; padding-top: 1.5rem; }
 .about-opening__statement p { margin: 0; max-width: 26rem; font-size: .9rem; }
@@ -23,9 +23,9 @@
 .contact-closing { background: #dfdfd5; color: #111; padding-block: clamp(3rem, 6vw, 6rem); }
 .contact-closing__layout { display: flex; justify-content: space-between; align-items: end; gap: 2rem; }
 .contact-closing h2 { margin: 1.5rem 0 0; font-size: clamp(2rem, 4.7vw, 4.5rem); font-style: italic; font-weight: 900; line-height: 1; letter-spacing: -.055em; }
-.institutional-action { display: inline-flex; align-items: center; justify-content: center; min-height: 3.25rem; padding: 1rem 1.5rem; background: #111; color: #fff; text-decoration: none; font-size: .85rem; font-weight: 700; white-space: nowrap; }
+.institutional-action { display: inline-flex; align-items: center; justify-content: center; min-height: 3.25rem; padding: 1rem 1.5rem; background: #111; color: #fff; text-decoration: none; font-size: .85rem; font-weight: 700; text-align: center; }
 .contact-page { padding-block: clamp(3rem, 6vw, 6rem); background: #11120f; color: #fff; }
-.contact-opening h1 { margin: 3rem 0 2rem; font-size: clamp(3rem, 7.7vw, 7.5rem); line-height: .96; font-style: italic; font-weight: 900; letter-spacing: -.06em; }
+.contact-opening h1 { margin: 3rem 0 2rem; font-size: clamp(3rem, 7.7vw, 7.5rem); line-height: .96; font-style: italic; font-weight: 900; letter-spacing: -.06em; overflow-wrap: anywhere; }
 .contact-opening h1 span { color: #bfc1b2; }
 .contact-opening > p { max-width: 29rem; margin: 0 0 0 auto; color: #d0d1c7; line-height: 1.65; font-size: 1.05rem; }
 .contact-channels { margin-top: clamp(3rem, 7vw, 7rem); }

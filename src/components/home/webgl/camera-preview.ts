@@ -5,6 +5,8 @@ type DeviceNavigator = Navigator & {
   connection?: { saveData?: boolean };
 };
 
+const frameTimeoutMs = 5_000;
+
 export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
   const nav = navigator as DeviceNavigator;
   if (
@@ -21,10 +23,13 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
   let failed = false;
   let slowFrames = 0;
   let sentAt = 0;
+  let frameTimeout: ReturnType<typeof setTimeout> | undefined;
   let lastFrame: CameraFrame | undefined;
   let progress = 0;
 
   function stop() {
+    clearTimeout(frameTimeout);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
     worker?.terminate();
     worker = undefined;
     canvas?.remove();
@@ -36,6 +41,16 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
   function fail() {
     failed = true;
     stop();
+  }
+
+  function onVisibilityChange() {
+    clearTimeout(frameTimeout);
+    if (document.hidden) return;
+    if (inFlight) {
+      sentAt = performance.now();
+      frameTimeout = setTimeout(fail, frameTimeoutMs);
+    }
+    render();
   }
 
   function render() {
@@ -57,6 +72,7 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
       lastFrame = frame;
       sentAt = performance.now();
       inFlight = true;
+      frameTimeout = setTimeout(fail, frameTimeoutMs);
     } catch {
       fail();
     }
@@ -69,6 +85,8 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
       worker = new Worker(new URL("./camera-worker.ts", import.meta.url), { type: "module" });
       worker.addEventListener("error", fail);
       worker.addEventListener("message", ({ data }: MessageEvent<CameraReply>) => {
+        if (!worker) return;
+        clearTimeout(frameTimeout);
         if (data === "unavailable") {
           fail();
           return;
@@ -100,7 +118,7 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
   }, { rootMargin: "55% 0px" });
   resize.observe(host);
   observer.observe(root);
-  document.addEventListener("visibilitychange", render);
+  document.addEventListener("visibilitychange", onVisibilityChange);
 
   return {
     update(value: number) {
@@ -108,9 +126,6 @@ export function mountCameraPreview(root: HTMLElement, host: HTMLElement) {
       if (rendered && !failed && progress < 0.12) root.dataset.mode = "webgl";
       render();
     },
-    dispose() {
-      document.removeEventListener("visibilitychange", render);
-      stop();
-    },
+    dispose: stop,
   };
 }

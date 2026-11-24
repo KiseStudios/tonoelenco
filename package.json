@@ -12,7 +12,8 @@
     "build": "next build",
     "start": "next start",
     "test:content": "node --experimental-strip-types --test tests/content.test.mjs",
-    "test:navigation": "node --test tests/navigation.test.mjs"
+    "test:navigation": "node --test tests/navigation.test.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "gsap": "^3.13.0",
@@ -22,6 +23,8 @@
     "three": "^0.180.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4.1.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.0",
