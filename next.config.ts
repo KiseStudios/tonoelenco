@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
-const config: NextConfig = { agentRules: false };
+const config: NextConfig = {
+  agentRules: false,
+  output: "export",
+  images: { unoptimized: true },
+};
 
 export default config;
