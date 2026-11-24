@@ -1,32 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { Mesh, Object3D, Scene, WebGLRenderer } from "three";
+import type { gsap } from "gsap";
 
 type DeviceNavigator = Navigator & {
   deviceMemory?: number;
   connection?: { saveData?: boolean };
 };
 
-type Disposable = { dispose(): void };
-type SceneObject = {
-  geometry?: Disposable;
-  material?: Disposable | Disposable[];
-};
-type SceneLike = {
-  add(object: unknown): void;
-  traverse(callback: (object: SceneObject) => void): void;
-};
-type RendererLike = {
-  dispose(): void;
-  setPixelRatio(value: number): void;
-  setClearColor(color: number, alpha: number): void;
-  setSize(width: number, height: number, updateStyle?: boolean): void;
-  render(scene: unknown, camera: unknown): void;
-};
-type TimelineLike = {
-  kill(): void;
-  scrollTrigger?: { kill(): void };
-};
+function isMesh(object: Object3D): object is Mesh {
+  return "isMesh" in object && object.isMesh === true;
+}
 
 export function LensScrollTransition() {
   const rootRef = useRef<HTMLElement>(null);
@@ -38,9 +23,9 @@ export function LensScrollTransition() {
     if (!root || !canvas) return;
 
     let observer: IntersectionObserver | undefined;
-    let renderer: RendererLike | undefined;
-    let scene: SceneLike | undefined;
-    let timeline: TimelineLike | undefined;
+    let renderer: WebGLRenderer | undefined;
+    let scene: Scene | undefined;
+    let timeline: gsap.core.Timeline | undefined;
     let resizeHandler: (() => void) | undefined;
     let disposed = false;
 
@@ -78,21 +63,23 @@ export function LensScrollTransition() {
         const ScrollTrigger = scrollModule.ScrollTrigger;
         gsap.registerPlugin(ScrollTrigger);
 
-        scene = new THREE.Scene();
+        const activeScene = new THREE.Scene();
+        scene = activeScene;
         const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
         camera.position.set(0, 0, 9);
 
-        renderer = new THREE.WebGLRenderer({
+        const activeRenderer = new THREE.WebGLRenderer({
           canvas,
           alpha: true,
           antialias: true,
           powerPreference: "low-power",
         });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-        renderer.setClearColor(0x000000, 0);
+        renderer = activeRenderer;
+        activeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        activeRenderer.setClearColor(0x000000, 0);
 
         const lens = new THREE.Group();
-        scene.add(lens);
+        activeScene.add(lens);
 
         const metal = new THREE.MeshStandardMaterial({ color: 0x262626, metalness: 0.88, roughness: 0.24 });
         const edge = new THREE.MeshStandardMaterial({ color: 0x858585, metalness: 0.92, roughness: 0.2 });
@@ -149,27 +136,27 @@ export function LensScrollTransition() {
         iris.add(centerRing);
 
         const ambient = new THREE.AmbientLight(0xffffff, 1.45);
-        scene.add(ambient);
+        activeScene.add(ambient);
         const keyLight = new THREE.DirectionalLight(0xffffff, 3.1);
         keyLight.position.set(-3, 4, 7);
-        scene.add(keyLight);
+        activeScene.add(keyLight);
         const rimLight = new THREE.PointLight(0x91b7ca, 18, 16);
         rimLight.position.set(3, -2, 4);
-        scene.add(rimLight);
+        activeScene.add(rimLight);
 
         const render = () => {
-          if (!renderer || !scene) return;
-          renderer.render(scene, camera);
+          if (disposed || !renderer) return;
+          activeRenderer.render(activeScene, camera);
         };
 
         const resize = () => {
-          if (!renderer) return;
+          if (disposed || !renderer) return;
           const bounds = root.getBoundingClientRect();
           const width = Math.max(1, bounds.width);
           const height = Math.max(1, bounds.height);
           camera.aspect = width / height;
           camera.updateProjectionMatrix();
-          renderer.setSize(width, height, false);
+          activeRenderer.setSize(width, height, false);
           render();
         };
         resize();
@@ -177,7 +164,7 @@ export function LensScrollTransition() {
         window.addEventListener("resize", resize, { passive: true });
 
         root.dataset.mode = "webgl";
-        timeline = gsap.timeline({
+        const activeTimeline = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: root,
@@ -191,7 +178,9 @@ export function LensScrollTransition() {
           onUpdate: render,
         });
 
-        timeline
+        timeline = activeTimeline;
+
+        activeTimeline
           .to(lens.scale, { x: 4.7, y: 4.7, z: 4.7 }, 0)
           .to(lens.rotation, { z: Math.PI * 2, y: 0.22 }, 0)
           .to(camera.position, { z: 4.4 }, 0)
@@ -218,11 +207,10 @@ export function LensScrollTransition() {
       timeline?.kill();
       if (scene) {
         scene.traverse((object) => {
-          object.geometry?.dispose();
-          if (object.material) {
-            const materials = Array.isArray(object.material) ? object.material : [object.material];
-            materials.forEach((material) => material.dispose());
-          }
+          if (!isMesh(object)) return;
+          object.geometry.dispose();
+          const materials = Array.isArray(object.material) ? object.material : [object.material];
+          materials.forEach((material) => material.dispose());
         });
       }
       renderer?.dispose();
