@@ -11,7 +11,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "build": "next build",
     "start": "next start",
-    "test:content": "node --experimental-strip-types --test tests/content.test.mjs"
+    "test:content": "node --experimental-strip-types --test tests/content.test.mjs",
+    "test:navigation": "node --test tests/navigation.test.mjs"
   },
   "dependencies": {
     "next": "^16.4.6",
