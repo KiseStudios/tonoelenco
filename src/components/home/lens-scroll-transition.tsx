@@ -92,7 +92,7 @@ export function LensScrollTransition() {
           observer?.disconnect();
           void loadScene();
         }
-      }, { rootMargin: "240px 0px" });
+      });
       observer.observe(root);
     }
     window.addEventListener("resize", resize, { passive: true });

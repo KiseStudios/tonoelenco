@@ -66,11 +66,9 @@
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.lens-transition[data-mode="fallback"] { min-height: auto; }
-.lens-transition[data-mode="fallback"] .lens-transition__pin { min-height: min(90svh, 48rem); }
 @media (max-width: 47.99rem) {
-  .lens-transition__pin,
-  .lens-transition[data-mode="fallback"] .lens-transition__pin { min-height: 36rem; }
+  .lens-transition,
+  .lens-transition__pin { min-height: 36rem; }
   .lens-transition__fallback { inset: -2rem -4.5rem 9rem; }
   .lens-transition__caption { max-width: calc(100% - 2 * var(--layout-gutter)); bottom: 2.5rem; }
   .lens-transition__caption h2 { font-size: clamp(2.5rem, 12vw, 4rem); }

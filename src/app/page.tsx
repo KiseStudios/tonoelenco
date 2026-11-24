@@ -5,29 +5,10 @@ import { HomeHero } from "../components/home/home-hero";
 import { LensScrollTransition } from "../components/home/lens-scroll-transition";
 import { Container, Eyebrow } from "../components/brand";
 
-const editorialItems = [
-  { label: "MODALIDADE", value: "Motocross" },
-  { label: "OLHAR", value: "Fotografia esportiva" },
-  { label: "REGISTRO", value: "Cada momento importa" },
-];
-
 export default function Home() {
   return (
     <main>
       <HomeHero />
-      <section className="home-editorial-strip" aria-label="Informações editoriais">
-        <Container className="home-editorial-strip__inner">
-          {editorialItems.map((item, index) => (
-            <div className="home-editorial-item" key={item.label}>
-              <span className="home-editorial-item__index">0{index + 1}</span>
-              <div>
-                <p>{item.label}</p>
-                <strong>{item.value}</strong>
-              </div>
-            </div>
-          ))}
-        </Container>
-      </section>
       <LensScrollTransition />
       <CoverageSection />
       <section id="sobre-elenco" className="home-about">

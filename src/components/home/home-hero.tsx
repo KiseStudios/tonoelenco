@@ -6,18 +6,21 @@ import { heroPhoto } from "../../data/coverage";
 export function HomeHero() {
   return (
     <section className="home-hero" aria-labelledby="home-title">
-      <div className="home-hero__visual">
+      <picture className="home-hero__visual">
+        <source
+          media="(max-width: 40rem)"
+          srcSet={`/images/motocross-hero-480.webp 480w, /images/motocross-hero-original.jpg ${heroPhoto.width}w`}
+          sizes="100vw"
+        />
         <Image
           src="/images/motocross-hero-original.jpg"
           alt={heroPhoto.alt}
           fill
-          priority
+          loading="eager"
           fetchPriority="high"
-          sizes="(max-width: 832px) 100vw, 62vw"
           className="home-hero__image"
         />
-      </div>
-      <div className="home-hero__scrim" aria-hidden="true" />
+      </picture>
       <Container className="home-hero__content">
         <Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow>
         <h1 id="home-title" className="home-hero__title">
@@ -25,21 +28,20 @@ export function HomeHero() {
           <br />
           MUNDO FAZ
           <br />
-          <span>PARTE.</span>
+          PARTE.
         </h1>
         <p className="home-hero__copy">
           Cada prova tem uma história. Encontre a sua.
         </p>
         <div className="home-hero__actions">
           <Link className="home-button home-button--primary" href="/galeria">
-            Encontre suas fotos <span aria-hidden="true">↗</span>
+            Encontre suas fotos
           </Link>
           <a className="home-button home-button--secondary" href="#sobre-elenco">
-            Descubra o ELENCO <span aria-hidden="true">↓</span>
+            Descubra o ELENCO
           </a>
         </div>
       </Container>
-      <div className="home-hero__edge" aria-hidden="true">FOTOGRAFIA ESPORTIVA / MOMENTOS QUE FICAM</div>
     </section>
   );
 }
