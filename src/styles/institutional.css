@@ -63,12 +63,14 @@
 }
 @media (max-width: 47.99rem) {
   .site-navigation__archive { align-self: flex-start; margin-top: .5rem; }
+  .about-purpose__layout,
+  .founder-section__layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .founder-section__portrait { max-width: 32rem; }
+  .founder-section__copy h2 { margin-block: 1.25rem; }
 }
 @media (max-width: 37.5rem) {
   .about-opening h1 { font-size: clamp(2.75rem, 11.7vw, 4rem); margin-block: 2rem; }
   .about-opening__statement { align-items: start; flex-direction: column; gap: .75rem; }
-  .about-purpose__layout,
-  .founder-section__layout { grid-template-columns: 1fr; gap: 2rem; }
   .founder-section__copy h2 { font-size: clamp(2rem, 9vw, 3rem); }
   .contact-opening h1 { font-size: clamp(2.7rem, 10.8vw, 4rem); margin-top: 2rem; }
   .contact-opening > p { margin-left: 0; }
