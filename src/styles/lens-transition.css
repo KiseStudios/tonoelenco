@@ -1,33 +1,38 @@
 /* Studio camera. The poster is a still of the same three-dimensional scene. */
 .lens-transition {
   position: relative;
-  min-height: 100svh;
-  overflow: clip;
+  /* Reserve the full sticky range before hydration or WebGL initialization. */
+  --lens-stage-height: 100svh;
+  --lens-scroll-distance: clamp(34rem, 105svh, 90rem);
+  min-height: calc(var(--lens-stage-height) + var(--lens-scroll-distance));
   isolation: isolate;
   background: #0c0d0e;
   color: #fff;
 }
-.lens-transition__pin {
-  position: relative;
-  min-height: 100svh;
+.lens-transition__stage {
+  position: sticky;
+  top: 0;
+  height: var(--lens-stage-height);
   overflow: hidden;
   background: radial-gradient(ellipse at 65% 40%, #24282a 0, #121416 42%, #0c0d0e 74%);
 }
+.lens-transition__art,
 .lens-transition__canvas {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  pointer-events: none;
+}
+.lens-transition__canvas { opacity: 0; }
+.lens-transition__canvas canvas {
   display: block;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  pointer-events: none;
 }
 .lens-transition[data-mode="webgl"] .lens-transition__canvas { opacity: 1; }
 .lens-transition__fallback {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  transform-origin: 57% 53%;
 }
 .lens-transition__fallback img { object-fit: contain; }
 .lens-transition[data-mode="webgl"] .lens-transition__fallback { visibility: hidden; }
@@ -66,14 +71,17 @@
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+@media (max-width: 767px), (pointer: coarse) {
+  .lens-transition { --lens-scroll-distance: clamp(15rem, 62svh, 33rem); }
+}
 @media (max-width: 47.99rem) {
-  .lens-transition,
-  .lens-transition__pin { min-height: 36rem; }
-  .lens-transition__fallback { inset: -2rem -4.5rem 9rem; }
+  .lens-transition__fallback { inset: -2rem -4.5rem 7rem; }
   .lens-transition__caption { max-width: calc(100% - 2 * var(--layout-gutter)); bottom: 2.5rem; }
   .lens-transition__caption h2 { font-size: clamp(2.5rem, 12vw, 4rem); }
   .lens-transition__hint { max-width: 16rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lens-transition__canvas { display: none; }
+  .lens-transition { --lens-scroll-distance: 0px; }
+  .lens-transition__stage { position: relative; }
+  .lens-transition__hint { display: none; }
 }

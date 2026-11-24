@@ -122,12 +122,12 @@ export function createCameraModel() {
     screw.rotation.x = Math.PI / 2;
     screw.position.set(x, y, -0.08);
   });
-  if (typeof document !== "undefined") {
-    const labelCanvas = document.createElement("canvas");
+  if (typeof OffscreenCanvas !== "undefined" || typeof document !== "undefined") {
+    const labelCanvas = typeof document === "undefined" ? new OffscreenCanvas(512, 128) : document.createElement("canvas");
     labelCanvas.width = 512;
     labelCanvas.height = 128;
     const context = labelCanvas.getContext("2d");
-    if (context) {
+    if (context && "fillText" in context) {
       context.fillStyle = "#d1d5d3";
       context.font = "italic 900 72px Arial";
       context.fillText("ELENCO", 14, 82);

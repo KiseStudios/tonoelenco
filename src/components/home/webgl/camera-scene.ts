@@ -1,17 +1,20 @@
 import * as THREE from "three";
 import { createCameraModel } from "./camera-model";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import type { CameraFrame } from "./camera-worker";
 
-/** Original procedural camera. Loaded only when the transition enters the viewport. */
-export function createCameraScene(canvas: HTMLCanvasElement) {
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "low-power" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+/** The original studio camera, rendered off the main thread. */
+export function createCameraScene(canvas: OffscreenCanvas, pixelRatio: number) {
+  const context = canvas.getContext("webgl2", { alpha: true, antialias: true, failIfMajorPerformanceCaveat: true });
+  if (!context) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, context });
+  renderer.setPixelRatio(Math.min(pixelRatio, 1.5));
+  renderer.transmissionResolutionScale = 0.5;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   const scene = new THREE.Scene();
   const view = new THREE.PerspectiveCamera(32, 1, 0.1, 80);
-  view.position.set(0, 0.35, 11.5);
-  view.lookAt(0, 0.15, 0);
   let cameraModel: ReturnType<typeof createCameraModel> | undefined;
   let environment: THREE.WebGLRenderTarget | undefined;
 
@@ -20,7 +23,6 @@ export function createCameraScene(canvas: HTMLCanvasElement) {
     environment?.dispose();
     scene.clear();
     renderer.dispose();
-    renderer.forceContextLoss();
   }
 
   try {
@@ -46,13 +48,30 @@ export function createCameraScene(canvas: HTMLCanvasElement) {
     rim.position.set(5, 2, -3);
     scene.add(rim);
 
+    const initialRotation = model.camera.rotation.clone();
+    let lastWidth = 0;
+    let lastHeight = 0;
     return {
-      camera: model.camera, view, iris: model.iris,
-      render() { renderer.render(scene, view); },
-      resize(width: number, height: number) {
-        view.aspect = width / height;
-        view.updateProjectionMatrix();
-        renderer.setSize(width, height, false);
+      render({ width, height, progress }: CameraFrame) {
+        if (width !== lastWidth || height !== lastHeight) {
+          lastWidth = width;
+          lastHeight = height;
+          view.aspect = width / height;
+          view.updateProjectionMatrix();
+          renderer.setSize(width, height, false);
+        }
+
+        const time = progress * 1.18;
+        const rotation = 1 - Math.min(time / 0.6, 1);
+        const approach = THREE.MathUtils.clamp(time - 0.18, 0, 1);
+        const focus = Math.min(approach / 0.6, 1);
+        const aperture = THREE.MathUtils.clamp((time - 0.2) / 0.65, 0, 1);
+        model.camera.rotation.set(initialRotation.x * rotation, initialRotation.y * rotation, initialRotation.z * rotation);
+        view.position.set(0.82 * approach, THREE.MathUtils.lerp(0.35, 0.4, approach), THREE.MathUtils.lerp(11.5, 2.65, approach));
+        view.lookAt(0.82 * focus, THREE.MathUtils.lerp(0.15, 0.4, focus), 0);
+        model.iris.rotation.z = Math.PI / 5 * aperture;
+        model.iris.scale.set(1 + 0.8 * aperture, 1 + 0.8 * aperture, 1);
+        renderer.render(scene, view);
       },
       dispose,
     };
