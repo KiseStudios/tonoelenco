@@ -8,7 +8,7 @@
 }
 .coverage-section { padding-block: clamp(3.5rem, 7vw, 7rem) clamp(3rem, 5vw, 5rem); }
 .coverage-intro { display: grid; grid-template-columns: 2fr 1fr; align-items: end; gap: 3rem; margin-block: clamp(2.5rem, 5vw, 5rem) 2.5rem; }
-.coverage-title { margin: 0; font-size: clamp(3.2rem, 7.8vw, 8rem); font-weight: 900; font-style: italic; letter-spacing: -.065em; line-height: .93; }
+.coverage-title { margin: 0; font-size: clamp(3.2rem, 7.8vw, 8rem); font-weight: 900; font-style: italic; letter-spacing: -.065em; line-height: .93; overflow-wrap: anywhere; }
 .coverage-title span { color: var(--coverage-muted); }
 .coverage-intro p { max-width: 23rem; margin: 0 0 .5rem; font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.65; color: #45463f; }
 .coverage-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3.5rem 1.5rem; border-top: 1px solid var(--coverage-rule); padding-top: 1.5rem; align-items: start; }
@@ -65,7 +65,7 @@
   .coverage-grid--gallery .coverage-photo:nth-child(n) { grid-column: auto; margin-top: 0; }
 }
 @media (max-width: 37.5rem) {
-  .coverage-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .coverage-intro { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
   .coverage-title { font-size: clamp(3rem, 12vw, 4.5rem); }
   .coverage-intro p { max-width: 25rem; }
   .coverage-grid,
