@@ -2,122 +2,68 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import type { gsap } from "gsap";
-import type { createCameraScene } from "./webgl/camera-scene";
-
-type DeviceNavigator = Navigator & {
-  deviceMemory?: number;
-  connection?: { saveData?: boolean };
-};
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { mountCameraPreview } from "./webgl/camera-preview";
 
 export function LensScrollTransition() {
   const rootRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
+    const stage = stageRef.current;
     const canvas = canvasRef.current;
-    if (!root || !canvas) return;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const screen = window.matchMedia("(max-width: 767px)");
-    const nav = navigator as DeviceNavigator;
-    const lowPower = nav.connection?.saveData === true || (nav.deviceMemory !== undefined && nav.deviceMemory <= 4);
-    let scene: ReturnType<typeof createCameraScene> | undefined;
-    let context: gsap.Context | undefined;
-    let observer: IntersectionObserver | undefined;
-    let disposed = false;
+    if (!root || !stage || !canvas) return;
 
-    const release = () => {
-      context?.revert();
-      context = undefined;
-      const activeScene = scene;
-      scene = undefined;
-      activeScene?.dispose();
-      delete canvas.dataset.engine;
-      root.dataset.mode = "fallback";
-    };
-    const resize = () => {
-      if (!scene || disposed || document.hidden) return;
-      scene.resize(root.clientWidth, root.clientHeight);
-      scene.render();
-    };
-    const changePreference = () => {
-      if (motion.matches || screen.matches) release();
-    };
-    const restore = (event: Event) => {
-      event.preventDefault();
-      release();
-    };
-    const loadScene = async () => {
-      if (disposed || motion.matches || screen.matches || lowPower) return;
-      try {
-        const [engine, gsapModule, scrollModule] = await Promise.all([
-          import("./webgl/camera-scene"), import("gsap"), import("gsap/ScrollTrigger"),
-        ]);
-        if (disposed || motion.matches || screen.matches) return;
-        const gsap = gsapModule.gsap;
-        gsap.registerPlugin(scrollModule.ScrollTrigger);
-        const activeScene = engine.createCameraScene(canvas);
-        scene = activeScene;
-        canvas.dataset.engine = "three.js";
-        resize();
-        root.dataset.mode = "webgl";
-        const focus = { x: 0, y: 0.15 };
-        context = gsap.context(() => {
-          gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: { trigger: root, start: "top top", end: "+=1450", scrub: 0.7, pin: true, anticipatePin: 1, invalidateOnRefresh: true },
-            onUpdate: () => {
-              if (disposed || !scene || document.hidden) return;
-              activeScene.view.lookAt(focus.x, focus.y, 0);
-              activeScene.render();
-            },
-          })
-            .to(activeScene.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.6 }, 0)
-            .to(activeScene.view.position, { x: 0.82, y: 0.4, z: 2.65, duration: 1 }, 0.18)
-            .to(focus, { x: 0.82, y: 0.4, duration: 0.6 }, 0.18)
-            .to(activeScene.iris.rotation, { z: Math.PI / 5, duration: 0.65 }, 0.2)
-            .to(activeScene.iris.scale, { x: 1.8, y: 1.8, duration: 0.65 }, 0.2)
-            .to(".lens-transition__caption", { opacity: 0, y: -28, duration: 0.28 }, 0.15)
-            .to(canvas, { opacity: 0, duration: 0.2 }, 0.98);
-        }, root);
-        activeScene.render();
-      } catch {
-        release();
-      }
-    };
-    if (!motion.matches && !screen.matches && !lowPower && "WebGLRenderingContext" in window) {
-      observer = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          observer?.disconnect();
-          void loadScene();
-        }
+    gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+    media.add({
+      motion: "(prefers-reduced-motion: no-preference)",
+      desktop: "(min-width: 48rem) and (pointer: fine)",
+    }, ({ conditions }) => {
+      if (!conditions?.motion) return;
+
+      const { desktop } = conditions;
+      const preview = desktop ? mountCameraPreview(root, canvas) : undefined;
+      const frame = { progress: 0 };
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: root,
+          start: "top top",
+          end: () => "+=" + (root.offsetHeight - stage.offsetHeight),
+          scrub: true,
+        },
       });
-      observer.observe(root);
-    }
-    window.addEventListener("resize", resize, { passive: true });
-    document.addEventListener("visibilitychange", resize);
-    motion.addEventListener("change", changePreference);
-    screen.addEventListener("change", changePreference);
-    canvas.addEventListener("webglcontextlost", restore);
-    return () => {
-      disposed = true;
-      observer?.disconnect();
-      window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", resize);
-      motion.removeEventListener("change", changePreference);
-      screen.removeEventListener("change", changePreference);
-      canvas.removeEventListener("webglcontextlost", restore);
-      release();
-    };
+      timeline
+        .to(frame, { progress: 1, duration: 1, onUpdate: () => preview?.update(frame.progress) }, 0)
+        .to(".lens-transition__fallback", { scale: desktop ? 4.2 : 3.1, duration: 0.81 }, 0.14)
+        .to(".lens-transition__caption", { opacity: 0, y: -24, duration: 0.27 }, 0.14)
+        .to(".lens-transition__art", { opacity: 0, duration: 0.24 }, 0.76);
+
+      // Recalculate only this trigger if the sticky range or the Hero above it changes size.
+      const resize = new ResizeObserver(() => timeline.scrollTrigger?.refresh());
+      resize.observe(root);
+      resize.observe(stage);
+      if (root.previousElementSibling) resize.observe(root.previousElementSibling);
+      return () => {
+        resize.disconnect();
+        preview?.dispose();
+      };
+    }, root);
+    return () => media.revert();
   }, []);
 
   return (
     <section ref={rootRef} className="lens-transition" aria-labelledby="lens-transition-title" data-mode="fallback">
-      <div className="lens-transition__pin">
-        <canvas ref={canvasRef} className="lens-transition__canvas" aria-hidden="true" />
-        <div className="lens-transition__fallback" aria-hidden="true">
-          <Image src="/images/camera-studio.webp" alt="" fill sizes="(max-width: 767px) 100vw, 80vw" />
+      <div ref={stageRef} className="lens-transition__stage">
+        <div className="lens-transition__art" aria-hidden="true">
+          <div ref={canvasRef} className="lens-transition__canvas" />
+          <div className="lens-transition__fallback">
+            <Image src="/images/camera-studio.webp" alt="" fill sizes="(max-width: 767px) 100vw, 80vw" />
+          </div>
         </div>
         <div className="lens-transition__caption">
           <p className="lens-transition__eyebrow">ELENCO · Fotografia esportiva</p>
