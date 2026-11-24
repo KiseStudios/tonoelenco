@@ -7,6 +7,27 @@ type DeviceNavigator = Navigator & {
   connection?: { saveData?: boolean };
 };
 
+type Disposable = { dispose(): void };
+type SceneObject = {
+  geometry?: Disposable;
+  material?: Disposable | Disposable[];
+};
+type SceneLike = {
+  add(object: unknown): void;
+  traverse(callback: (object: SceneObject) => void): void;
+};
+type RendererLike = {
+  dispose(): void;
+  setPixelRatio(value: number): void;
+  setClearColor(color: number, alpha: number): void;
+  setSize(width: number, height: number, updateStyle?: boolean): void;
+  render(scene: unknown, camera: unknown): void;
+};
+type TimelineLike = {
+  kill(): void;
+  scrollTrigger?: { kill(): void };
+};
+
 export function LensScrollTransition() {
   const rootRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,9 +38,9 @@ export function LensScrollTransition() {
     if (!root || !canvas) return;
 
     let observer: IntersectionObserver | undefined;
-    let renderer: import("three").WebGLRenderer | undefined;
-    let scene: import("three").Scene | undefined;
-    let timeline: import("gsap").GSAPTimeline | undefined;
+    let renderer: RendererLike | undefined;
+    let scene: SceneLike | undefined;
+    let timeline: TimelineLike | undefined;
     let resizeHandler: (() => void) | undefined;
     let disposed = false;
 
@@ -197,10 +218,9 @@ export function LensScrollTransition() {
       timeline?.kill();
       if (scene) {
         scene.traverse((object) => {
-          const mesh = object as import("three").Mesh;
-          if (mesh.geometry) mesh.geometry.dispose();
-          if (mesh.material) {
-            const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          object.geometry?.dispose();
+          if (object.material) {
+            const materials = Array.isArray(object.material) ? object.material : [object.material];
             materials.forEach((material) => material.dispose());
           }
         });
