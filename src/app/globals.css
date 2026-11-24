@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
+* { box-sizing: border-box; }
+html { background: var(--color-background); color: var(--color-foreground); }
+body { margin: 0; font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-body); }
+button, a { color: inherit; }
+.brand-container { width: min(100% - (var(--layout-gutter) * 2), var(--layout-max-width)); margin-inline: auto; }
+.brand-container--content { max-width: 52rem; }
+.brand-container--wide { max-width: var(--layout-max-width); }
+.brand-container--full { max-width: none; }
+.brand-eyebrow { margin: 0; font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); letter-spacing: var(--letter-spacing-wide); line-height: var(--line-height-tight); text-transform: uppercase; }
+.brand-logo-frame { display: flex; width: 100%; min-height: 10rem; align-items: center; justify-content: center; padding: var(--space-4); }
+.brand-logo-frame--on-light { background: var(--color-brand-white); color: var(--color-brand-black); }
+.brand-logo-frame--on-dark { background: var(--color-brand-black); color: var(--color-brand-white); }
+.brand-logo { display: block; width: 100%; height: auto; object-fit: contain; }
+.brand-logo-frame--primary .brand-logo { max-width: 22.5rem; }
+.brand-logo-frame--horizontal .brand-logo { max-width: 35rem; }
+.brand-logo-frame--symbol .brand-logo { max-width: 10rem; }
+.brand-logo-pending { display: grid; gap: var(--space-2); justify-items: center; text-align: center; font-weight: var(--font-weight-bold); }
+.brand-logo-pending small { font-size: var(--font-size-xs); font-weight: var(--font-weight-regular); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; }
+.brand-display { font-size: var(--font-size-display); font-weight: var(--font-weight-bold); letter-spacing: var(--letter-spacing-tight); line-height: var(--line-height-tight); text-transform: uppercase; }
+.brand-heading { font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); letter-spacing: var(--letter-spacing-tight); line-height: var(--line-height-tight); }
+.brand-cut { clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%); }
+.brand-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--layout-gap); }
+@media (min-width: 48rem) { .brand-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+@media (min-width: 80rem) { .brand-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } }
