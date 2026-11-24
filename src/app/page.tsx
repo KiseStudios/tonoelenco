@@ -1,3 +1,4 @@
+import { CoverageSection } from "../components/coverage/coverage-section";
 import { HomeHero } from "../components/home/home-hero";
 import { Container, Eyebrow } from "../components/brand";
 
@@ -24,6 +25,7 @@ export default function Home() {
           ))}
         </Container>
       </section>
+      <CoverageSection />
       <section id="sobre-elenco" className="home-about">
         <Container className="home-about__inner">
           <Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow>
