@@ -3,10 +3,19 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
 import sharp from "sharp";
+import { createHash } from "node:crypto";
 import { photographs, coverages, heroPhoto } from "../src/data/coverage.ts";
 import { officialLinks, externalLinkProps } from "../src/lib/links.ts";
 
 const publicDirectory = path.resolve("public");
+
+test("Hero utiliza o JPEG original oficial sem uma segunda compressão", async () => {
+  const bytes = await readFile("public/images/motocross-hero-original.jpg");
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), heroPhoto.source.sha256);
+  const metadata = await sharp(bytes).metadata();
+  assert.equal(metadata.width, heroPhoto.width);
+  assert.equal(metadata.height, heroPhoto.height);
+});
 
 test("IDs de fotografias e coberturas são únicos", () => {
   for (const items of [photographs, coverages]) {
