@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container, Eyebrow } from "../brand";
+import { heroPhoto } from "../../data/coverage";
 
 export function HomeHero() {
   return (
     <section className="home-hero" aria-labelledby="home-title">
       <Image
-        src="/images/motocross-front.webp"
-        alt="Piloto de motocross acelerando em uma pista de terra durante a prova"
+        src={heroPhoto.src}
+        alt={heroPhoto.alt}
         fill
         priority
         fetchPriority="high"
