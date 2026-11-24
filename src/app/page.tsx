@@ -8,8 +8,10 @@ import { Container, Eyebrow } from "../components/brand";
 export default function Home() {
   return (
     <main>
-      <HomeHero />
-      <LensScrollTransition />
+      <div className="home-cinema">
+        <HomeHero />
+        <LensScrollTransition />
+      </div>
       <CoverageSection />
       <section id="sobre-elenco" className="home-about">
         <Container className="home-about__inner">

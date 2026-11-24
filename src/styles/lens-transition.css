@@ -6,7 +6,7 @@
   --lens-scroll-distance: clamp(34rem, 105svh, 90rem);
   min-height: calc(var(--lens-stage-height) + var(--lens-scroll-distance));
   isolation: isolate;
-  background: #0c0d0e;
+  background: var(--cinema-ink);
   color: #fff;
 }
 .lens-transition__stage {
@@ -14,13 +14,24 @@
   top: 0;
   height: var(--lens-stage-height);
   overflow: hidden;
-  background: radial-gradient(ellipse at 65% 40%, #24282a 0, #121416 42%, #0c0d0e 74%);
+  background:
+    linear-gradient(to bottom, var(--cinema-ink), transparent clamp(3rem, 12svh, 7rem)),
+    radial-gradient(ellipse at 65% 28%, #24282a, #121416 44%, var(--cinema-ink) 78%);
+}
+.lens-transition__reveal {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 .lens-transition__art,
 .lens-transition__canvas {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+.lens-transition__art {
+  --lens-lift: clamp(1.5rem, 6svh, 3.75rem);
+  inset-block: calc(-1 * var(--lens-lift)) var(--lens-lift);
 }
 .lens-transition__canvas { opacity: 0; }
 .lens-transition__canvas canvas {
