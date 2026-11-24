@@ -3,28 +3,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 
-const navigation = [
-  { label: "Home", href: "/" },
-  { label: "Galeria", href: "/galeria" },
-];
+import { siteNavigation } from "../../lib/navigation";
+import { officialLinks, externalLinkProps } from "../../lib/links";
 
-export function SiteShell({ children }: { children: ReactNode }) {
+export function SiteShell({ children, footer }: { children: ReactNode; footer: ReactNode }) {
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="site-shell">
       <a className="site-skip-link" href="#conteudo">Pular para o conteúdo</a>
-      <header className="site-header">
+      <header className="site-header" onKeyDown={(event) => {
+        if (event.key === "Escape" && menuOpen) {
+          setMenuOpen(false);
+          toggleRef.current?.focus();
+        }
+      }}>
         <div className="site-header__inner">
           <Link className="site-wordmark" href="/" aria-label="ELENCO — página inicial" onClick={() => setMenuOpen(false)}>
             <Image src="/brand/logo-horizontal.png" alt="ELENCO Fotografia Esportiva" width={220} height={62} priority className="site-wordmark__image" />
           </Link>
 
           <button
+            ref={toggleRef}
             className="site-menu-toggle"
             type="button"
             aria-expanded={menuOpen}
@@ -41,8 +46,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
             className={`site-navigation${menuOpen ? " site-navigation--open" : ""}`}
             aria-label="Navegação principal"
           >
-            {navigation.map((item) => {
-              const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+            {siteNavigation.map((item) => {
+              const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
               return (
                 <Link
                   key={item.href}
@@ -55,18 +60,22 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </Link>
               );
             })}
+            <a
+              className="site-navigation__archive"
+              href={officialLinks.archive}
+              {...externalLinkProps}
+              onClick={() => setMenuOpen(false)}
+            >
+              Encontre suas fotos
+              <span className="coverage-sr-only"> no acervo geral Banlek (abre em nova aba)</span>
+            </a>
           </nav>
         </div>
       </header>
 
       <div id="conteudo" tabIndex={-1}>{children}</div>
 
-      <footer className="site-footer">
-        <div className="site-footer__inner">
-          <Image src="/brand/logo-horizontal.png" alt="ELENCO Fotografia Esportiva" width={180} height={51} className="site-footer__logo" />
-          <p>Fotografia Esportiva</p>
-        </div>
-      </footer>
+      {footer}
     </div>
   );
 }
