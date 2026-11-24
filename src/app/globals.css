@@ -2,6 +2,7 @@
 @import "../styles/tokens.css";
 @import "../styles/coverage.css";
 @import "../styles/institutional.css";
+@import "../styles/lens-transition.css";
 * { box-sizing: border-box; }
 html { background: var(--color-background); color: var(--color-foreground); scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-body); }
