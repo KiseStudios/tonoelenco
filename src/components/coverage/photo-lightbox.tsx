@@ -41,6 +41,19 @@ export function PhotoLightbox({ photo, position, total, onClose, onNavigate }: P
         if (event.target === event.currentTarget) event.currentTarget.close();
       }}
       onKeyDown={(event) => {
+        if (event.key === "Tab") {
+          const controls = event.currentTarget.querySelectorAll<HTMLButtonElement>("button");
+          const first = controls[0];
+          const last = controls[controls.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+          return;
+        }
         if (total < 2) return;
         if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
           event.preventDefault();
