@@ -39,7 +39,8 @@
 .contact-opening > p { max-width: 29rem; margin: 0 0 0 auto; color: #d0d1c7; line-height: 1.65; font-size: 1.05rem; }
 .contact-channels { margin-top: clamp(3rem, 7vw, 7rem); }
 .contact-channels > h2 { margin: 0 0 1.5rem; font-size: .75rem; letter-spacing: .1em; font-weight: 700; }
-.contact-channel { background: #111; color: #fff; display: grid; grid-template-columns: 1fr 2fr; gap: .75rem 2rem; padding: 2rem clamp(.75rem, 1.4vw, 1.5rem); border-top: 1px solid #686a60; text-decoration: none; }
+.contact-channel { background: #111; color: #fff; cursor: pointer; display: grid; grid-template-columns: 1fr 2fr auto; gap: .75rem 2rem; padding: 2rem clamp(.75rem, 1.4vw, 1.5rem); border-top: 1px solid #686a60; text-decoration: none; }
+.contact-channel__arrow { align-self: center; font-size: 1.5rem; line-height: 1; }
 .contact-channel:last-child { border-bottom: 1px solid #686a60; }
 .contact-channel__context { color: inherit; font-size: .85rem; text-transform: uppercase; align-self: center; }
 .contact-channel__title { max-width: 22ch; font-size: clamp(1.5rem, 3.3vw, 3rem); line-height: 1.15; font-weight: 700; letter-spacing: -.035em; }
@@ -55,6 +56,7 @@
     color: #000;
   }
 }
+.contact-channel:active { background: #d9d9d9; color: #000; }
 .contact-page__return { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 2rem; }
 .contact-page__return p { color: #d0d1c7; font-size: .85rem; }
 .institutional-text-link { display: inline-flex; align-items: center; min-height: 2.75rem; border-bottom: 1px solid currentColor; text-decoration: none; font-size: .85rem; font-weight: 700; }
@@ -91,7 +93,8 @@
   .founder-section__copy h2 { font-size: clamp(2rem, 9vw, 3rem); }
   .contact-opening h1 { font-size: clamp(2.7rem, 10.8vw, 4rem); margin-top: 2rem; }
   .contact-opening > p { margin-left: 0; }
-  .contact-channel { grid-template-columns: 1fr; gap: .75rem; padding-block: 1.5rem; }
+  .contact-channel__arrow { grid-column: 2; grid-row: 1 / span 2; }
+  .contact-channel { grid-template-columns: minmax(0, 1fr) auto; gap: .75rem; padding-block: 1.5rem; }
   .contact-channel__title { max-width: 21ch; }
   .contact-page__return { align-items: start; flex-direction: column; gap: .5rem; }
   .institutional-footer__main { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-bottom: 2.5rem; }

@@ -25,14 +25,17 @@ export default function ContatoPage() {
           <a className="contact-channel" href={officialLinks.whatsapp} {...externalLinkProps}>
             <span className="contact-channel__context">Contato direto</span>
             <span className="contact-channel__title">CONVERSAR NO WHATSAPP</span>
+            <span className="contact-channel__arrow" aria-hidden="true">↗</span>
           </a>
           <a className="contact-channel" href={officialLinks.instagram} {...externalLinkProps}>
             <span className="contact-channel__context">Para conversar sobre o seu evento</span>
             <span className="contact-channel__title">FALAR NO INSTAGRAM</span>
+            <span className="contact-channel__arrow" aria-hidden="true">↗</span>
           </a>
           <a className="contact-channel" href={officialLinks.archive} {...externalLinkProps}>
             <span className="contact-channel__context">Para encontrar suas fotografias</span>
             <span className="contact-channel__title">ACESSAR O ACERVO NO BANLEK</span>
+            <span className="contact-channel__arrow" aria-hidden="true">↗</span>
           </a>
         </section>
         <div className="contact-page__return">
