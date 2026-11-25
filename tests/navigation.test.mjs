@@ -55,13 +55,12 @@ test("menu responsivo mantém controles acessíveis no HTML exportado", async ()
   }
 });
 
-test("CTAs da Home conduzem à galeria e à apresentação institucional", async () => {
+test("CTA da Hero conduz à galeria", async () => {
   const html = await page("/");
   const links = anchors(html);
   assert.ok(links.some((link) => link.href === "/galeria"), "CTA da galeria ausente");
-  assert.ok(links.some((link) => link.href === "#sobre-elenco"), "CTA de apresentação ausente");
   assert.match(html, /Encontre suas fotos/);
-  assert.match(html, /Descubra o ELENCO/);
+  assert.doesNotMatch(html, /Descubra o ELENCO/);
 });
 
 test("chamadas entre Sobre e Contato mantêm caminhos internos válidos", async () => {

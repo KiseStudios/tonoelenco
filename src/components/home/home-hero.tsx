@@ -35,9 +35,6 @@ export function HomeHero() {
             <Link className="home-button home-button--primary" href="/galeria">
               Encontre suas fotos
             </Link>
-            <a className="home-button home-button--secondary" href="#sobre-elenco">
-              Descubra o ELENCO
-            </a>
           </div>
         </Container>
       </div>
