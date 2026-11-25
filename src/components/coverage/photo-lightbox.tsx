@@ -73,7 +73,7 @@ export function PhotoLightbox({ photo, position, total, onClose, onNavigate }: P
             <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} className="photo-lightbox__image" sizes="(max-width: 768px) 100vw, 85vw" />
           </div>
           <figcaption className="photo-lightbox__caption">
-            <h2 id="lightbox-title" aria-live="polite">{photo.name}</h2>
+            <h2 className="coverage-sr-only" id="lightbox-title" aria-live="polite">{photo.name}</h2>
             <span>{position + 1} / {total}</span>
           </figcaption>
         </figure>

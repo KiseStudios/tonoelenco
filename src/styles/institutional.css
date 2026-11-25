@@ -26,7 +26,6 @@
   .founder-section__frame:hover img { transform: scale(1.035); }
 }
 .founder-section__portrait img { display: block; width: 100%; height: auto; }
-.founder-section__portrait figcaption { border-top: 1px solid #b8b9af; margin-top: 1rem; padding-top: .75rem; font-size: .75rem; color: #45463f; }
 .founder-section__copy h2 { margin: 2rem 0; font-size: clamp(2rem, 4.1vw, 4rem); font-weight: 900; line-height: 1; letter-spacing: -.05em; }
 .founder-section__copy h2 span { color: #64665d; }
 .founder-section__copy > p { max-width: 28rem; color: #45463f; line-height: 1.7; }
