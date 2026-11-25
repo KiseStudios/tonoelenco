@@ -46,7 +46,7 @@ export function CoverageGrid({ photos, variant = "gallery" }: {
             </button>
             <figcaption className="coverage-photo__caption">
               <span>{photo.sport ? sportLabels[photo.sport] : "Institucional"}</span>
-              <span>{photo.name}</span>
+              {variant === "selection" && <span>{photo.name}</span>}
             </figcaption>
           </figure>
         ))}

@@ -10,6 +10,13 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/source-sans-3/latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
 * { box-sizing: border-box; }
 html { background: var(--color-background); color: var(--color-foreground); scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-body); }
