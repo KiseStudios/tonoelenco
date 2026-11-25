@@ -23,7 +23,7 @@
   width: min(84vw, 900px);
   height: min(65svh, 560px);
   display: grid;
-  grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
+  grid-template: repeat(2, minmax(0, 1fr)) / repeat(4, minmax(0, 1fr));
 }
 .contact-sheet img {
   width: 100%;
@@ -33,9 +33,11 @@
   transform: translate(calc(var(--x, 0px) * var(--separation, 1)), calc(var(--y) * var(--separation, 1)));
   --y: -4px;
 }
-.contact-sheet img:nth-child(n+4) { --y: 4px; }
-.contact-sheet img:nth-child(3n+1) { --x: -8px; }
-.contact-sheet img:nth-child(3n) { --x: 8px; }
+.contact-sheet img:nth-child(n+5) { --y: 4px; }
+.contact-sheet img:nth-child(4n+1) { --x: -9px; }
+.contact-sheet img:nth-child(4n+2) { --x: -3px; }
+.contact-sheet img:nth-child(4n+3) { --x: 3px; }
+.contact-sheet img:nth-child(4n) { --x: 9px; }
 .lens-transition[data-mode="scrub"] .contact-matte {
   display: block;
   position: absolute;
@@ -53,12 +55,16 @@
 @media (max-width: 600px) {
   .lens-transition[data-mode="scrub"] .contact-sheet {
     width: 88vw;
-    grid-template: repeat(3, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr));
+    grid-template: repeat(4, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr));
   }
+  .contact-sheet img[src$="areia-atleta-sorrindo.webp"],
+  .contact-sheet img[src$="corrida-atleta-oculos.webp"] { object-position: center 18%; }
   .contact-sheet img:nth-child(n) { --x: -3px; --y: 0px; }
   .contact-sheet img:nth-child(even) { --x: 3px; }
-  .contact-sheet img:nth-child(-n+2) { --y: -6px; }
-  .contact-sheet img:nth-child(n+5) { --y: 6px; }
+  .contact-sheet img:nth-child(-n+2) { --y: -9px; }
+  .contact-sheet img:nth-child(3), .contact-sheet img:nth-child(4) { --y: -3px; }
+  .contact-sheet img:nth-child(n+5) { --y: 3px; }
+  .contact-sheet img:nth-child(n+7) { --y: 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .lens-transition__stage { height: min(60svh, 36rem); }

@@ -1,11 +1,12 @@
-// Same order and crops as the approved contact sheet.
 const photos = [
   ["corrida-atleta-azul", 828],
   ["esporte-areia-atleta-bola", 702],
-  ["motocross-front", 692],
+  ["areia-atleta-sorrindo", 779],
   ["corrida-atleta-bracos-erguidos", 828],
   ["motocross-piloto-lateral", 702],
   ["corrida-atleta-rosa", 630],
+  ["areia-atleta-sentado", 757],
+  ["corrida-atleta-oculos", 698],
 ] as const;
 
 export async function decodeSheet() {
@@ -14,7 +15,7 @@ export async function decodeSheet() {
     photo.alt = "";
     photo.decoding = "async";
     photo.fetchPriority = "low";
-    photo.sizes = "(max-width: 600px) 44vw, (max-width: 1072px) 28vw, 300px";
+    photo.sizes = "(max-width: 600px) 44vw, (max-width: 1072px) 21vw, 225px";
     photo.srcset = `/images/contact-sheet/${name}.webp 360w, /images/${name}.webp ${width}w`;
     photo.src = `/images/${name}.webp`;
     await photo.decode();

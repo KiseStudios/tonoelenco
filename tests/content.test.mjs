@@ -75,8 +75,8 @@ test("coberturas referenciam fotos existentes e álbuns comprovados", () => {
   }
 });
 
-test("acervo recebido tem oito fotos e nenhum álbum inferido", () => {
-  assert.equal(photographs.length, 8);
+test("acervo recebido tem onze fotos e nenhum álbum inferido", () => {
+  assert.equal(photographs.length, 11);
   assert.equal(coverages.length, 0);
   assert.ok(photographs.every((photo) => photo.album === null));
   assert.equal(heroPhoto.id, "motocross-front");
