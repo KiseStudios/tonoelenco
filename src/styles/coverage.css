@@ -18,7 +18,6 @@
 .coverage-photo__expand { display: inline-flex; align-items: center; min-height: 2.75rem; position: absolute; right: .75rem; bottom: .75rem; padding: .5rem .85rem; background: #fff; color: #111; font-size: .75rem; font-weight: 700; transition: transform 180ms ease; }
 .coverage-photo__caption { display: flex; flex-direction: column; gap: .25rem; margin-top: .85rem; line-height: 1.4; }
 .coverage-photo__caption span:first-child { font-weight: 800; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
-.coverage-photo__caption span + span { color: #45463f; font-size: .8rem; }
 .coverage-grid--selection .coverage-photo:nth-child(1) { grid-column: span 5; }
 .coverage-grid--selection .coverage-photo:nth-child(2) { grid-column: span 3; margin-top: 6rem; }
 .coverage-grid--selection .coverage-photo:nth-child(3) { grid-column: span 4; margin-top: 2rem; }
@@ -49,7 +48,7 @@
 .photo-lightbox__figure { display: flex; flex: 1; min-height: 0; flex-direction: column; margin: clamp(.5rem, 2dvh, 1rem) 0; gap: clamp(.5rem, 2dvh, 1rem); }
 .photo-lightbox__image-frame { display: flex; justify-content: center; min-height: 0; flex: 1; }
 .photo-lightbox__image { display: block; width: 100%; height: 100%; object-fit: contain; }
-.photo-lightbox__caption { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .85rem; }
+.photo-lightbox__caption { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; font-size: .85rem; }
 .photo-lightbox__caption h2 { margin: 0; font: inherit; }
 .photo-lightbox__caption > span { white-space: nowrap; color: #cccfc2; }
 .photo-lightbox__navigation { display: flex; justify-content: space-between; gap: 1rem; }

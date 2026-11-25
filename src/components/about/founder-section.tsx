@@ -20,7 +20,6 @@ export function FounderSection() {
               loading="lazy"
             />
           </div>
-          <figcaption>O olhar por trás do ELENCO.</figcaption>
         </figure>
         <div className="founder-section__copy">
           <Eyebrow>O fundador · A presença por trás da câmera</Eyebrow>
