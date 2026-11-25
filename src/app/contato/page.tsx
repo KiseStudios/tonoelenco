@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Container, Eyebrow } from "../../components/brand";
 import { officialLinks, externalLinkProps } from "../../lib/links";
 
-const description = "Converse com o ELENCO pelo Instagram ou encontre suas fotografias no acervo oficial do Banlek.";
+const description = "Converse com o ELENCO pelo WhatsApp ou Instagram, ou encontre suas fotografias no acervo oficial do Banlek.";
 
 export const metadata: Metadata = {
   title: "Contato",
@@ -22,6 +22,11 @@ export default function ContatoPage() {
         </header>
         <section className="contact-channels" aria-labelledby="channels-title">
           <h2 id="channels-title">POR ONDE COMEÇAMOS?</h2>
+          <a className="contact-channel" href={officialLinks.whatsapp} {...externalLinkProps}>
+            <span className="contact-channel__context">Contato direto</span>
+            <span className="contact-channel__title">Conversar pelo WhatsApp</span>
+            <span className="contact-channel__destination">+55 (27) 99781-3252 · Abre em nova aba</span>
+          </a>
           <a className="contact-channel" href={officialLinks.instagram} {...externalLinkProps}>
             <span className="contact-channel__context">Para conversar sobre o seu evento</span>
             <span className="contact-channel__title">Falar com o ELENCO pelo Instagram</span>

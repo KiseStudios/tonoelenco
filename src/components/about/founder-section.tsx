@@ -10,14 +10,16 @@ export function FounderSection() {
     <section className="founder-section" aria-labelledby="founder-title">
       <Container className="founder-section__layout">
         <figure className="founder-section__portrait">
-          <Image
-            src={founder.src}
-            alt={founder.alt}
-            width={founder.width}
-            height={founder.height}
-            sizes="(max-width: 600px) 100vw, 50vw"
-            loading="lazy"
-          />
+          <div className="founder-section__frame">
+            <Image
+              src={founder.src}
+              alt={founder.alt}
+              width={founder.width}
+              height={founder.height}
+              sizes="(max-width: 767px) min(80vw, 320px), 384px"
+              loading="lazy"
+            />
+          </div>
           <figcaption>O olhar por trás do ELENCO.</figcaption>
         </figure>
         <div className="founder-section__copy">

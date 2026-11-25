@@ -3,6 +3,13 @@
 @import "../styles/coverage.css";
 @import "../styles/institutional.css";
 @import "../styles/lens-transition.css";
+@font-face {
+  font-family: Geist;
+  src: url("/fonts/geist/geist-latin-wght-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
 * { box-sizing: border-box; }
 html { background: var(--color-background); color: var(--color-foreground); scroll-behavior: smooth; }
 body { margin: 0; font-family: var(--font-family-base); font-size: var(--font-size-base); line-height: var(--line-height-body); }
@@ -108,16 +115,17 @@ button, a { color: inherit; }
 .home-hero__content {
   grid-area: 1 / 1;
   padding-block: 4rem clamp(2rem, 5.5svh, 4.5rem);
-  text-shadow: 0 2px 7px rgb(0 0 0 / .85);
+  font-family: var(--font-family-editorial);
 }
 .home-hero__title {
   margin: clamp(.85rem, 2vw, 1.55rem) 0 0;
   font-size: clamp(2.75rem, 6.6vw, 6.5rem);
-  font-weight: 900;
-  line-height: .94;
+  font-weight: 800;
+  line-height: .96;
   letter-spacing: -.045em;
 }
-.home-hero__copy { margin: clamp(.85rem, 1.7vw, 1.5rem) 0 0; font-size: clamp(1rem, 1.45vw, 1.25rem); }
+.home-hero__actions { font-family: var(--font-family-base); }
+.home-hero__copy { font-weight: 500; line-height: 1.45; margin: clamp(.85rem, 1.7vw, 1.5rem) 0 0; font-size: clamp(1rem, 1.45vw, 1.25rem); }
 .home-hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: clamp(1rem, 2.1vw, 1.75rem); }
 .home-button { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; padding: .85rem 1.2rem; font-size: .9rem; font-weight: 800; text-decoration: none; }
 .home-button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 7px #000; }

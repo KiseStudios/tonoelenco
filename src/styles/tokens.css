@@ -20,6 +20,7 @@
   --space-24: 6rem;
 
   /* Support typography; official family awaits confirmation. */
+  --font-family-editorial: Geist, Arial, sans-serif;
   --font-family-base: Arial, Helvetica, sans-serif;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
