@@ -67,26 +67,24 @@ button, a { color: inherit; }
 .home-hero {
   position: relative;
   isolation: isolate;
-  background: radial-gradient(ellipse at 66% 22%, #292c29, var(--cinema-ink) 72%);
+  background: var(--cinema-ink);
   color: #fff;
 }
 .home-hero__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   align-items: end;
 }
 .home-hero__photograph {
-  grid-area: 1 / 2;
+  grid-area: 1 / 1;
   position: relative;
-  justify-self: center;
+  align-self: start;
+  width: 100%;
   z-index: -2;
 }
 .home-hero__image {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: clamp(30rem, calc(100svh - 5.25rem), 56rem);
   object-fit: contain;
 }
 .home-hero::before,
@@ -98,8 +96,8 @@ button, a { color: inherit; }
 }
 .home-hero::before {
   z-index: -1;
-  background: radial-gradient(ellipse 67% 82% at 13% 89%,
-    rgb(0 0 0 / .83) 0%, rgb(0 0 0 / .66) 63%, rgb(0 0 0 / .35) 74%, transparent 100%);
+  background: radial-gradient(ellipse 51% 83% at 12% 88%,
+    rgb(0 0 0 / .68), rgb(0 0 0 / .36) 62%, transparent);
 }
 .home-hero::after {
   z-index: -1;
