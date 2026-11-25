@@ -25,7 +25,7 @@ export default function ContatoPage() {
           <a className="contact-channel" href={officialLinks.whatsapp} {...externalLinkProps}>
             <span className="contact-channel__context">Contato direto</span>
             <span className="contact-channel__title">Conversar pelo WhatsApp</span>
-            <span className="contact-channel__destination">+55 (27) 99781-3252 · Abre em nova aba</span>
+            <span className="contact-channel__destination">Abre em nova aba</span>
           </a>
           <a className="contact-channel" href={officialLinks.instagram} {...externalLinkProps}>
             <span className="contact-channel__context">Para conversar sobre o seu evento</span>
