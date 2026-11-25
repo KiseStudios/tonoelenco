@@ -22,12 +22,12 @@ export function SiteFooter() {
               />
             </Link>
             <p>Aqui todo mundo faz parte.</p>
+            <nav aria-label="Navegação do rodapé" className="institutional-footer__navigation">
+              {siteNavigation.map((item) => (
+                <Link key={item.href} href={item.href}>{item.label}</Link>
+              ))}
+            </nav>
           </div>
-          <nav aria-label="Navegação do rodapé" className="institutional-footer__navigation">
-            {siteNavigation.map((item) => (
-              <Link key={item.href} href={item.href}>{item.label}</Link>
-            ))}
-          </nav>
           <div className="institutional-footer__channels">
             <a href={officialLinks.whatsapp} {...externalLinkProps}>
               WhatsApp

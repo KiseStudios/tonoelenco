@@ -59,10 +59,10 @@
 .contact-page__return p { color: #d0d1c7; font-size: .85rem; }
 .institutional-text-link { display: inline-flex; align-items: center; min-height: 2.75rem; border-bottom: 1px solid currentColor; text-decoration: none; font-size: .85rem; font-weight: 700; }
 .institutional-footer { background: #000; color: #fff; padding-block: clamp(3rem, 5vw, 5rem) 1.5rem; border-top: 1px solid #45463f; }
-.institutional-footer__main { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; align-items: start; padding-bottom: 4rem; }
+.institutional-footer__main { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; padding-bottom: 4rem; }
 .institutional-footer__logo { display: block; width: min(100%, 23rem); height: auto; filter: invert(1); }
 .institutional-footer__identity p { margin: 1rem 0 0; font-size: .8rem; color: #c5c6bc; }
-.institutional-footer__navigation,
+.institutional-footer__navigation { display: flex; flex-wrap: wrap; column-gap: clamp(.8rem, 2vw, 2rem); margin-top: .75rem; }
 .institutional-footer__channels { display: flex; flex-direction: column; align-items: start; gap: .25rem; }
 .institutional-footer a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; font-size: .85rem; }
 .institutional-footer__channels a { text-decoration: underline; text-underline-offset: .3rem; }
@@ -77,7 +77,6 @@
   .founder-section__layout { gap: 2rem; }
   .contact-closing__layout { align-items: start; flex-direction: column; }
   .institutional-footer__main { grid-template-columns: 1.5fr 1fr; gap: 2rem; }
-  .institutional-footer__channels { grid-column: 1 / -1; }
 }
 @media (max-width: 47.99rem) {
   .site-navigation__archive { align-self: flex-start; margin-top: .5rem; }
@@ -95,9 +94,7 @@
   .contact-channel { grid-template-columns: 1fr; gap: .75rem; padding-block: 1.5rem; }
   .contact-channel__title { max-width: 21ch; }
   .contact-page__return { align-items: start; flex-direction: column; gap: .5rem; }
-  .institutional-footer__main { grid-template-columns: 1fr 1fr; gap: 2rem 1rem; padding-bottom: 2.5rem; }
-  .institutional-footer__identity { grid-column: 1 / -1; }
+  .institutional-footer__main { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-bottom: 2.5rem; }
   .institutional-footer__logo { width: 17rem; }
-  .institutional-footer__channels { grid-column: auto; }
   .institutional-footer__legal { flex-direction: column; gap: .5rem; }
 }
