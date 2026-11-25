@@ -19,6 +19,28 @@ jobs:
       - run: npm run test:navigation
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:e2e
+      - name: Conferir capturas e decodificar vídeo
+        run: |
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
+          shopt -s globstar nullglob
+          for width in 390 820 1440; do
+            for section in hero transicao galeria-home sobre-home footer sobre-pagina; do
+              files=(test-results/**/"$section-$width.png")
+              test "${#files[@]}" -eq 1
+              ffmpeg -v error -xerror -i "${files[0]}" -f null -
+              ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "${files[0]}"
+              echo "PNG conferido: $section-$width.png"
+            done
+          done
+          videos=(test-results/**/rolagem-integral-desktop.webm)
+          test "${#videos[@]}" -eq 1
+          ffmpeg -v error -xerror -i "${videos[0]}" -f null -
+          frames=$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of csv=p=0 "${videos[0]}")
+          test "$frames" -gt 1
+          echo "WebM conferido: $frames quadros"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
