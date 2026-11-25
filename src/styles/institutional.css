@@ -11,10 +11,19 @@
 .about-purpose { padding-block: clamp(3rem, 7vw, 7rem); }
 .about-purpose__layout { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; }
 .about-purpose h2 { margin: 0 0 2rem; font-size: clamp(2.25rem, 4.5vw, 4.5rem); font-weight: 900; line-height: 1; letter-spacing: -.045em; }
+.about-purpose p, .founder-section__copy > p, .about-opening__statement,
+.contact-opening > p, .home-about p, .coverage-intro p {
+  font-family: var(--font-family-editorial);
+}
 .about-purpose p { max-width: 37rem; margin: 1rem 0 0; color: #45463f; font-size: clamp(1rem, 1.7vw, 1.25rem); line-height: 1.65; }
 .founder-section { padding-block: 1rem clamp(4rem, 8vw, 8rem); }
-.founder-section__layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+.founder-section__layout { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 36rem); justify-content: center; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
 .founder-section__portrait { margin: 0; }
+.founder-section__frame { overflow: hidden; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .founder-section__frame img { transition: transform 320ms ease-out; }
+  .founder-section__frame:hover img { transform: scale(1.035); }
+}
 .founder-section__portrait img { display: block; width: 100%; height: auto; }
 .founder-section__portrait figcaption { border-top: 1px solid #b8b9af; margin-top: 1rem; padding-top: .75rem; font-size: .75rem; color: #45463f; }
 .founder-section__copy h2 { margin: 2rem 0; font-size: clamp(2rem, 4.1vw, 4rem); font-weight: 900; line-height: 1; letter-spacing: -.05em; }
@@ -65,7 +74,7 @@
   .site-navigation__archive { align-self: flex-start; margin-top: .5rem; }
   .about-purpose__layout,
   .founder-section__layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
-  .founder-section__portrait { max-width: 32rem; }
+  .founder-section__portrait { width: min(80%, 20rem); justify-self: center; }
   .founder-section__copy h2 { margin-block: 1.25rem; }
 }
 @media (max-width: 37.5rem) {

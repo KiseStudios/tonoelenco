@@ -75,6 +75,7 @@ test("chamadas entre Sobre e Contato mantêm caminhos internos válidos", async 
 
 test("destinos externos oficiais abrem com proteção de nova aba", async () => {
   const external = [
+    "https://wa.me/5527997813252",
     "https://www.instagram.com/tonoelenco/",
     "https://banlek.com/tonoelenco",
   ];

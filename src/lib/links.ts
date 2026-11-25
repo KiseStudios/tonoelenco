@@ -1,5 +1,6 @@
 /** Destinos oficiais fornecidos no briefing. A disponibilidade remota não é inferida. */
 export const officialLinks = {
+  whatsapp: "https://wa.me/5527997813252",
   instagram: "https://www.instagram.com/tonoelenco/",
   archive: "https://banlek.com/tonoelenco",
 } as const;
