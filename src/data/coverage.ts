@@ -177,6 +177,72 @@ export const photographs = [
       "evidence": null
     },
     "album": null
+  },
+  {
+    "id": "corrida-atleta-oculos",
+    "name": "Corredor de óculos",
+    "src": "/images/corrida-atleta-oculos.webp",
+    "kind": "editorial",
+    "sport": "corrida",
+    "alt": "Corredor de óculos escuros e camiseta branca com uma das mãos junto ao peito.",
+    "width": 698,
+    "height": 1027,
+    "credit": null,
+    "source": {
+      "archive": "WhatsApp Unknown 2026-11-25 at 10.19.10.zip",
+      "file": "WhatsApp Image 2026-11-25 at 10.09.56.jpeg",
+      "sha256": "50970090bfc91eaff0780702627ef88455c3a9577788cea7a2facbb644a4ad56"
+    },
+    "authorization": {
+      "suppliedFor": "desenvolvimento-do-site",
+      "publication": "pendente",
+      "evidence": null
+    },
+    "album": null
+  },
+  {
+    "id": "areia-atleta-sentado",
+    "name": "Pausa na areia",
+    "src": "/images/areia-atleta-sentado.webp",
+    "kind": "editorial",
+    "sport": "esporte-de-areia-nao-confirmado",
+    "alt": "Atleta de regata clara e short azul sentado na areia, com a cabeça baixa.",
+    "width": 757,
+    "height": 1062,
+    "credit": null,
+    "source": {
+      "archive": "WhatsApp Unknown 2026-11-25 at 10.19.10.zip",
+      "file": "WhatsApp Image 2026-11-25 at 10.18.51.jpeg",
+      "sha256": "3fdf29cbc64d4927868b0fd0dbb85dd3bf2a5871b4192b226202aab209c71d0d"
+    },
+    "authorization": {
+      "suppliedFor": "desenvolvimento-do-site",
+      "publication": "pendente",
+      "evidence": null
+    },
+    "album": null
+  },
+  {
+    "id": "areia-atleta-sorrindo",
+    "name": "Sorriso na quadra",
+    "src": "/images/areia-atleta-sorrindo.webp",
+    "kind": "editorial",
+    "sport": "esporte-de-areia-nao-confirmado",
+    "alt": "Atleta de camiseta escura e short cinza sorrindo em uma quadra de areia.",
+    "width": 779,
+    "height": 881,
+    "credit": null,
+    "source": {
+      "archive": "WhatsApp Unknown 2026-11-25 at 10.19.10.zip",
+      "file": "WhatsApp Image 2026-11-25 at 10.18.52.jpeg",
+      "sha256": "801f7c519e947b49eccb6d0a3ea5f60a3e06874cbee157cbe7f6c98a06a10227"
+    },
+    "authorization": {
+      "suppliedFor": "desenvolvimento-do-site",
+      "publication": "pendente",
+      "evidence": null
+    },
+    "album": null
   }
 ] as const satisfies readonly Photograph[];
 

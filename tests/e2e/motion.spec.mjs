@@ -135,7 +135,7 @@ for (const [width, height] of [[390, 844], [820, 1024], [1440, 900]]) {
         previous = progress;
         await expect.poll(async () => (await scene(page)).progress).toBeCloseTo(progress, 2);
         const sheet = stage.locator(".contact-sheet");
-        await expect(sheet.locator("img")).toHaveCount(6);
+        await expect(sheet.locator("img")).toHaveCount(8);
         const pixels = await stage.screenshot();
         if (phase === "folha") first = pixels;
         if (phase === "convergencia") expect(pixels.equals(first)).toBe(false);
