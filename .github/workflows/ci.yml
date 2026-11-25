@@ -57,7 +57,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: pr-013-motion-editorial
+          name: pr-014-contact-sheet
           path: test-results/**/editorial/*
           if-no-files-found: error
           retention-days: 30

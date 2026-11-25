@@ -1,13 +1,65 @@
-.lens-transition { position: relative; background: var(--cinema-ink, #0c0d0e); }
-.lens-transition__stage { height: 100svh; display: grid; place-items: center; position: relative; overflow: hidden; }
-.lens-transition__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.lens-transition__stage img { position: relative; display: block; width: min(72vw, 710px); height: auto; filter: brightness(0) invert(1); }
-/* Reserve the sticky range before hydration and logo decoding complete. */
+.lens-transition {
+  --paper: var(--cinema-ink, #0c0d0e);
+  --brand-width: min(68vw, 620px);
+  position: relative;
+  background: var(--paper);
+}
+.lens-transition__stage {
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.contact-brand {
+  position: relative;
+  width: var(--brand-width);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+.contact-sheet, .contact-matte { display: none; }
+.lens-transition[data-mode="scrub"] .contact-sheet {
+  position: absolute;
+  width: min(84vw, 900px);
+  height: min(65svh, 560px);
+  display: grid;
+  grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
+}
+.contact-sheet img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  transform: translate(calc(var(--x, 0px) * var(--separation, 1)), calc(var(--y) * var(--separation, 1)));
+  --y: -4px;
+}
+.contact-sheet img:nth-child(n+4) { --y: 4px; }
+.contact-sheet img:nth-child(3n+1) { --x: -8px; }
+.contact-sheet img:nth-child(3n) { --x: 8px; }
+.lens-transition[data-mode="scrub"] .contact-matte {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  mask: linear-gradient(#000, #000), url("/brand/logo-horizontal.png") center / var(--brand-width) auto no-repeat;
+  mask-composite: exclude;
+  opacity: 0;
+}
+.lens-transition[data-mode="scrub"] .contact-brand { opacity: 0; }
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  .lens-transition:is([data-mode="pending"], [data-mode="scrub"]) { height: 245svh; }
+  .lens-transition:is([data-mode="pending"], [data-mode="scrub"]) { height: 240svh; }
   .lens-transition:is([data-mode="pending"], [data-mode="scrub"]) .lens-transition__stage { position: sticky; top: 0; }
 }
-.lens-transition[data-mode="scrub"] img { opacity: 0; }
+@media (max-width: 600px) {
+  .lens-transition[data-mode="scrub"] .contact-sheet {
+    width: 88vw;
+    grid-template: repeat(3, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr));
+  }
+  .contact-sheet img:nth-child(n) { --x: -3px; --y: 0px; }
+  .contact-sheet img:nth-child(even) { --x: 3px; }
+  .contact-sheet img:nth-child(-n+2) { --y: -6px; }
+  .contact-sheet img:nth-child(n+5) { --y: 6px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .lens-transition__stage { height: min(60svh, 36rem); }
 }
