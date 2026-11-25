@@ -6,8 +6,9 @@ import { heroPhoto } from "../../data/coverage";
 export function HomeHero() {
   return (
     <section className="home-hero" aria-labelledby="home-title">
-      <Container className="home-hero__layout">
-        <div className="home-hero__photograph">
+      <div className="home-hero__layout">
+        <picture className="home-hero__photograph">
+          <source media="(min-width: 48rem)" srcSet="/images/motocross-hero-horizontal.webp" width={1866} height={843} />
           <Image
             src="/images/motocross-hero-original.jpg"
             alt={heroPhoto.alt}
@@ -17,8 +18,8 @@ export function HomeHero() {
             fetchPriority="high"
             className="home-hero__image"
           />
-        </div>
-        <div className="home-hero__content">
+        </picture>
+        <Container className="home-hero__content">
           <Eyebrow>ELENCO · Fotografia Esportiva</Eyebrow>
           <h1 id="home-title" className="home-hero__title">
             AQUI TODO
@@ -38,8 +39,8 @@ export function HomeHero() {
               Descubra o ELENCO
             </a>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

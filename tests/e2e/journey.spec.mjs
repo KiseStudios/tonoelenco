@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("a Home preserva o cabeçalho branco e a foto oficial inteira", async ({ page }) => {
+test("a Home preserva o cabeçalho branco e a composição integral da Hero", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("header")).toHaveCSS("background-color", "rgb(255, 255, 255)");
   const hero = page.getByRole("region", { name: /aqui todo/i });
@@ -15,9 +15,10 @@ test("a Home preserva o cabeçalho branco e a foto oficial inteira", async ({ pa
       naturalWidth: element.naturalWidth, naturalHeight: element.naturalHeight,
     };
   });
-  expect(photo.src).toBe("/images/motocross-hero-original.jpg");
+  const wide = await page.evaluate(() => matchMedia("(min-width: 48rem)").matches);
+  expect(photo.src).toBe(wide ? "/images/motocross-hero-horizontal.webp" : "/images/motocross-hero-original.jpg");
   expect(photo.fit).toBe("contain");
-  expect(photo.width).toBeLessThanOrEqual(photo.naturalWidth);
+  expect(photo.width).toBeCloseTo(await hero.evaluate(el => el.clientWidth), 0);
   expect(photo.width / photo.height).toBeCloseTo(photo.naturalWidth / photo.naturalHeight, 2);
   await expect(hero.getByRole("link", { name: "Encontre suas fotos" })).toHaveAttribute("href", "/galeria");
   await hero.getByRole("link", { name: "Descubra o ELENCO" }).click();
