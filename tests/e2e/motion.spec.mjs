@@ -136,10 +136,16 @@ for (const [width, height] of [[390, 844], [820, 1024], [1440, 900]]) {
         if (phase === "particulas") expect(pixels === first).toBe(false);
         if (phase === "retorno") expect(pixels === first).toBe(true);
         if (phase === "marca") await expect(stage.locator("img")).toHaveCSS("opacity", "1");
-        await info.attach(phase + "-" + width + ".png", { body: await stage.screenshot(), contentType: "image/png" });
+        const name = phase + "-" + width + ".png";
+        const file = info.outputPath("editorial", name);
+        await stage.screenshot({ path: file });
+        await info.attach(name, { path: file, contentType: "image/png" });
       }
       expect(errors).toEqual([]);
     } finally { await context.close(); }
-    await info.attach("scrub-" + width + ".webm", { path: await video.path(), contentType: "video/webm" });
+    const name = "scrub-" + width + ".webm";
+    const file = info.outputPath("editorial", name);
+    await video.saveAs(file);
+    await info.attach(name, { path: file, contentType: "video/webm" });
   });
 }
