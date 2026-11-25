@@ -1,9 +1,13 @@
-.lens-transition { position: relative; background: #05070a; }
-.lens-transition[data-mode="scrub"] { height: 245svh; }
+.lens-transition { position: relative; background: var(--cinema-ink, #0c0d0e); }
 .lens-transition__stage { height: 100svh; display: grid; place-items: center; position: relative; overflow: hidden; }
-.lens-transition[data-mode="scrub"] .lens-transition__stage { position: sticky; top: 0; }
 .lens-transition__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lens-transition__stage img { position: relative; display: block; width: min(72vw, 710px); height: auto; filter: brightness(0) invert(1); }
+/* Reserve the sticky range before hydration and logo decoding complete. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .lens-transition:is([data-mode="pending"], [data-mode="scrub"]) { height: 245svh; }
+  .lens-transition:is([data-mode="pending"], [data-mode="scrub"]) .lens-transition__stage { position: sticky; top: 0; }
+}
+.lens-transition[data-mode="scrub"] img { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   .lens-transition__stage { height: min(60svh, 36rem); }
 }

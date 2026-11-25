@@ -149,3 +149,61 @@ for (const [width, height] of [[390, 844], [820, 1024], [1440, 900]]) {
     await info.attach(name, { path: file, contentType: "video/webm" });
   });
 }
+
+test("a assinatura reserva a posição da galeria enquanto o logo decodifica", async ({ page }) => {
+  await page.addInitScript(() => {
+    const decode = HTMLImageElement.prototype.decode;
+    HTMLImageElement.prototype.decode = function () {
+      if (!this.closest(".lens-transition")) return decode.call(this);
+      return new Promise((resolve, reject) => {
+        window.releaseEditorialLogo = () => decode.call(this).then(resolve, reject);
+      });
+    };
+  });
+  await page.goto("/");
+  await expect.poll(() => page.evaluate(() => typeof window.releaseEditorialLogo)).toBe("function");
+  const before = await scene(page);
+  await page.evaluate(() => window.releaseEditorialLogo());
+  await expect(page.locator(".lens-transition")).toHaveAttribute("data-mode", "scrub");
+  const after = await scene(page);
+  expect(after.range).toBeGreaterThan(0);
+  expect(after.gallery).toBe(before.gallery);
+});
+
+test("Canvas aguarda a entrada da seção antes de desenhar", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.editorialFrames = 0;
+    const clearRect = CanvasRenderingContext2D.prototype.clearRect;
+    CanvasRenderingContext2D.prototype.clearRect = function (...args) {
+      if (this.canvas.closest(".lens-transition")) window.editorialFrames++;
+      clearRect.apply(this, args);
+    };
+  });
+  await page.setViewportSize({ ...page.viewportSize(), height: 400 });
+  await page.goto("/");
+  const initial = await scene(page);
+  await expect(page.locator(".lens-transition")).toHaveAttribute("data-mode", "scrub");
+  await expect(page.locator(".lens-transition__stage")).not.toBeInViewport();
+  const frames = () => page.evaluate(() => window.editorialFrames);
+  // Allow the initial ResizeObserver and animation-frame callbacks to run.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  expect(await frames()).toBe(0);
+  await scrollTo(page, initial.top + 120);
+  await expect.poll(frames).toBeGreaterThan(0);
+  await scrollTo(page, 0);
+  await expect(page.locator(".lens-transition__stage")).not.toBeInViewport();
+});
+
+test("exportação sem JavaScript mantém a assinatura estática", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto("/");
+    expect((await scene(page)).range).toBe(0);
+    await expect(page.locator(".lens-transition__stage")).toHaveCSS("position", "relative");
+    await expect(page.locator(".lens-transition img")).toBeVisible();
+    await expect(page.locator(".lens-transition canvas")).toHaveCount(0);
+  } finally {
+    await context.close();
+  }
+});

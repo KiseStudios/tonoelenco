@@ -21,11 +21,11 @@ function pixels(ctx: CanvasRenderingContext2D) {
   return points;
 }
 
-export function createMotion(canvas: HTMLCanvasElement, logo: HTMLImageElement) {
-  const ctx = canvas.getContext("2d");
+export function createMotion(ctx: CanvasRenderingContext2D, logo: HTMLImageElement) {
+  const { canvas } = ctx;
   const mask = document.createElement("canvas");
   const sampling = mask.getContext("2d", { willReadFrequently: true });
-  if (!ctx || !sampling) return;
+  if (!sampling) return;
   const icons = paths.map(path => new Path2D(path));
   mask.width = mask.height = 64;
   sampling.lineWidth = 1.8;
@@ -57,11 +57,10 @@ export function createMotion(canvas: HTMLCanvasElement, logo: HTMLImageElement) 
     const ratio = Math.min(devicePixelRatio, 1.5);
     canvas.width = Math.round(w * ratio);
     canvas.height = Math.round(h * ratio);
-    ctx!.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     count = w < 600 ? 1000 : w < 1100 ? 2400 : 4000;
   }
   function draw(p: number) {
-    if (!ctx) return;
     const unit = Math.min(w / 520, h / 420, 2);
     const span = Math.min(w * .79, 950);
     const brand = logo.clientWidth;
