@@ -12,10 +12,11 @@
 .about-purpose__layout { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; }
 .about-purpose h2 { margin: 0 0 2rem; font-size: clamp(2.25rem, 4.5vw, 4.5rem); font-weight: 900; line-height: 1; letter-spacing: -.045em; }
 .about-purpose p, .founder-section__copy > p, .about-opening__statement,
-.contact-opening > p, .home-about p, .coverage-intro p {
-  font-family: var(--font-family-editorial);
+.contact-opening > p, .home-about p, .coverage-intro p,
+.editorial-gallery__outro p, .home-hero__copy {
+  font-family: "Source Sans 3", Arial, sans-serif;
 }
-.about-purpose p { max-width: 37rem; margin: 1rem 0 0; color: #45463f; font-size: clamp(1rem, 1.7vw, 1.25rem); line-height: 1.65; }
+.about-purpose p { max-width: 55ch; margin: 1rem 0 0; color: #383a34; font-size: clamp(1rem, 1.7vw, 1.25rem); line-height: 1.65; }
 .founder-section { padding-block: 1rem clamp(4rem, 8vw, 8rem); }
 .founder-section__layout { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 36rem); justify-content: center; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
 .founder-section__portrait { margin: 0; }
