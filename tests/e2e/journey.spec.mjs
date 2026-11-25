@@ -21,9 +21,7 @@ test("a Home preserva o cabeçalho branco e a composição integral da Hero", as
   expect(photo.width).toBeCloseTo(await hero.evaluate(el => el.clientWidth), 0);
   expect(photo.width / photo.height).toBeCloseTo(photo.naturalWidth / photo.naturalHeight, 2);
   await expect(hero.getByRole("link", { name: "Encontre suas fotos" })).toHaveAttribute("href", "/galeria");
-  await hero.getByRole("link", { name: "Descubra o ELENCO" }).click();
-  await expect(page).toHaveURL(/#sobre-elenco$/);
-  await expect(page.locator("#sobre-elenco")).toBeInViewport();
+  await expect(hero.getByRole("link")).toHaveCount(1);
 });
 
 test("navegação, acervo e lightbox funcionam do início ao fim", async ({ page }) => {
