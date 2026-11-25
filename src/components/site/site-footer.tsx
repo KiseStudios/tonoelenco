@@ -30,7 +30,7 @@ export function SiteFooter() {
           </nav>
           <div className="institutional-footer__channels">
             <a href={officialLinks.whatsapp} {...externalLinkProps}>
-              WhatsApp +55 (27) 99781-3252
+              WhatsApp
               <span className="coverage-sr-only"> (abre em nova aba)</span>
             </a>
             <a href={officialLinks.instagram} {...externalLinkProps}>
