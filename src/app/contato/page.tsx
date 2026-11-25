@@ -24,18 +24,15 @@ export default function ContatoPage() {
           <h2 id="channels-title">POR ONDE COMEÇAMOS?</h2>
           <a className="contact-channel" href={officialLinks.whatsapp} {...externalLinkProps}>
             <span className="contact-channel__context">Contato direto</span>
-            <span className="contact-channel__title">Conversar pelo WhatsApp</span>
-            <span className="contact-channel__destination">Abre em nova aba</span>
+            <span className="contact-channel__title">CONVERSAR NO WHATSAPP</span>
           </a>
           <a className="contact-channel" href={officialLinks.instagram} {...externalLinkProps}>
             <span className="contact-channel__context">Para conversar sobre o seu evento</span>
-            <span className="contact-channel__title">Falar com o ELENCO pelo Instagram</span>
-            <span className="contact-channel__destination">@tonoelenco · Abre em nova aba</span>
+            <span className="contact-channel__title">FALAR NO INSTAGRAM</span>
           </a>
           <a className="contact-channel" href={officialLinks.archive} {...externalLinkProps}>
             <span className="contact-channel__context">Para encontrar suas fotografias</span>
-            <span className="contact-channel__title">Acessar o acervo geral no Banlek</span>
-            <span className="contact-channel__destination">Banlek · Abre em nova aba</span>
+            <span className="contact-channel__title">ACESSAR O ACERVO NO BANLEK</span>
           </a>
         </section>
         <div className="contact-page__return">
